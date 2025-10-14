@@ -1,24 +1,39 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package view;
 
+import bean.McpProdutos;
+import dao.Mcp_ProdutosDAO;
+import java.util.List;
+
 /**
  *
  * @author Samsung
  */
 public class Mcp_JDlgProdutoPesquisar extends javax.swing.JDialog {
-
+    private Mcp_JDlgProduto mcp_JDlgProduto;
+    Mcp_ControllerProduto mcp_controllerProduto;
+    /**
     /**
      * Creates new form Mcp_JDlgProdutoPesquisar
      */
     public Mcp_JDlgProdutoPesquisar(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+       super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Tela de Pesquisa de Produtos");
+        setTitle("Pesquisar Produto");
+
+        mcp_controllerProduto = new Mcp_ControllerProduto();
+        Mcp_ProdutosDAO mcpprodutoDAO = new Mcp_ProdutosDAO();
+        List lista = (List) mcpprodutoDAO.listAll();
+        mcp_controllerProduto.setList(lista);
+        jTable1.setModel(mcp_controllerProduto);
+    }
+    public void setTelaAnterior( Mcp_JDlgProduto mcp_JDlgProduto) {
+        this.mcp_JDlgProduto = mcp_JDlgProduto;
     }
 
     /**
@@ -85,7 +100,9 @@ public class Mcp_JDlgProdutoPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-        dispose();
+        McpProdutos mcpproduto =  mcp_controllerProduto.getBean( jTable1.getSelectedRow() );
+        mcp_JDlgProduto.beanView(mcpproduto);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**

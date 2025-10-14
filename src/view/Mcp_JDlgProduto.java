@@ -5,6 +5,8 @@
  */
 package view;
 
+import bean.McpProdutos;
+import dao.Mcp_ProdutosDAO;
 import javax.swing.JOptionPane;
 import tools.mcp_util;
 
@@ -13,21 +15,40 @@ import tools.mcp_util;
  * @author Samsung
  */
 public class Mcp_JDlgProduto extends javax.swing.JDialog {
-
-    /**
-     * Creates new form Mcp_JDlgProduto
-     */
+     private boolean incluir;
     public Mcp_JDlgProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("Cadastro de Produtos");
         setLocationRelativeTo(null);
-
-        // Desabilita campos no início
-       mcp_util.habilitar(false,
+        mcp_util.habilitar(false,
                 jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco,
                 jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao,
                 jBtnConfirmar, jBtnCancelar);
+    }
+    public void beanView(McpProdutos mcpprodutos) {
+        jTxtCodigo.setText(mcp_util.intToStr(mcpprodutos.getMcpIdProdutos()));
+        jTxtNome.setText(mcpprodutos.getMcpNome());
+        jTxtMarca.setText(mcpprodutos.getMcpMarca());
+        jTxtPreco.setText(mcpprodutos.getMcpPreco());
+        jTxtCategoria.setText(mcpprodutos.getMcpCategoria());
+        jTxtTamanho.setText(mcpprodutos.getMcpTamanho());
+        jTxtLancamento.setText(mcpprodutos.getMcpLancamento());
+        jTxtDescricao.setText(mcpprodutos.getMcpDescricao());
+    }
+
+    public McpProdutos viewBean() {
+        McpProdutos mcpprodutos = new McpProdutos();
+        int codigo = mcp_util.strToInt(jTxtCodigo.getText());
+        mcpprodutos.setMcpIdProdutos(codigo);
+        mcpprodutos.setMcpNome(jTxtNome.getText());
+        mcpprodutos.setMcpMarca(jTxtMarca.getText());
+        mcpprodutos.setMcpPreco(jTxtPreco.getText());
+        mcpprodutos.setMcpCategoria(jTxtCategoria.getText());
+        mcpprodutos.setMcpTamanho(jTxtTamanho.getText());
+        mcpprodutos.setMcpLancamento(jTxtLancamento.getText());
+        mcpprodutos.setMcpDescricao(jTxtDescricao.getText());
+        return mcpprodutos;
     }
 
     /**
@@ -246,6 +267,9 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
                 jBtnConfirmar, jBtnCancelar);
 
         mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, 
+                jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao);
+        incluir = true;
     
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
@@ -262,12 +286,23 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if(mcp_util.pergunta("deseja excluir?")) {
-            JOptionPane.showMessageDialog(null, "Excluido");}
+        JOptionPane.showMessageDialog(null, "Excluido");}
+        Mcp_ProdutosDAO mcpprodutoDAO = new Mcp_ProdutosDAO();
+            mcpprodutoDAO.delete(viewBean());
+        
+        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao);
 
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         // TODO add your handling code here:
+        Mcp_ProdutosDAO mcp_produtosDAO = new Mcp_ProdutosDAO();
+        McpProdutos mcp_produto = viewBean();
+        if (incluir == true) {
+            mcp_produtosDAO.insert(mcp_produto);
+        } else {
+            mcp_produtosDAO.update(mcp_produto);
+        }
         mcp_util.habilitar(false, jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, 
                 jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao, 
                 jBtnConfirmar, jBtnCancelar);
@@ -279,9 +314,9 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
-        // TODO add your handling code here:
-        Mcp_JDlgProdutoPesquisar telaPesquisar = new Mcp_JDlgProdutoPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+        Mcp_JDlgProdutoPesquisar Mcp_jDlgProdutoPesquisar = new Mcp_JDlgProdutoPesquisar(null, true);
+        Mcp_jDlgProdutoPesquisar.setTelaAnterior(this);
+        Mcp_jDlgProdutoPesquisar.setVisible(true);
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
