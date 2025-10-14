@@ -50,22 +50,25 @@ public static boolean pergunta(String cad){
     int resposta = JOptionPane.showConfirmDialog(null, cad, "Confirmação", JOptionPane.YES_NO_OPTION);
     return resposta == JOptionPane.YES_OPTION;
 }
-public static int strToInt(String num){
-    return Integer.parseInt(num); 
-}
-public static String IntTostr(int num){
-    return String.valueOf(num);
-}
-public static double strToDouble(double num){
-    return 0.0;
-}
-public static String DoubleTostr(String num){
-    return " ";
-}
-public static Date strToData(Date num){
-    return null;
-}
-public static String DataTostr(String num){
-    return " ";
-}
-}
+public static int strToInt(String num) {
+        return Integer.valueOf(num);
+    }
+    public static String intToStr(int num) {
+        return String.valueOf(num);
+    }    
+    
+    public static double strToDouble(String num) {
+        return 0;
+    }
+    public static String doubleToStr(double num) {
+        return "";
+    }
+        
+    public static Date strToDate(String data) {
+        return null;
+    }
+    public static String dateToStr(Date data) {
+        return "";
+    }
+    
+    }

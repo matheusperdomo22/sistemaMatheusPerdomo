@@ -33,7 +33,7 @@ public class McpCupons  implements java.io.Serializable {
      private Date mcpDataValidade;
      private String mcpAtivo;
      private String mcpUtilizacoes;
-     private Set mcpVendases = new HashSet(0);
+     
 
     public McpCupons() {
     }
@@ -54,7 +54,7 @@ public class McpCupons  implements java.io.Serializable {
        this.mcpDataValidade = mcpDataValidade;
        this.mcpAtivo = mcpAtivo;
        this.mcpUtilizacoes = mcpUtilizacoes;
-       this.mcpVendases = mcpVendases;
+       
     }
    
      @Id 
@@ -128,18 +128,6 @@ public class McpCupons  implements java.io.Serializable {
     public void setMcpUtilizacoes(String mcpUtilizacoes) {
         this.mcpUtilizacoes = mcpUtilizacoes;
     }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="mcpCupons")
-    public Set getMcpVendases() {
-        return this.mcpVendases;
-    }
-    
-    public void setMcpVendases(Set mcpVendases) {
-        this.mcpVendases = mcpVendases;
-    }
-
-
-
 
 }
 

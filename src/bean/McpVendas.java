@@ -33,7 +33,7 @@ public class McpVendas  implements java.io.Serializable {
      private String mcpFormaPagamento;
      private String mcpStatus;
      private String mcpObservacoes;
-     private Set mcpVendasProdutoses = new HashSet(0);
+     
 
     public McpVendas() {
     }
@@ -52,7 +52,7 @@ public class McpVendas  implements java.io.Serializable {
        this.mcpFormaPagamento = mcpFormaPagamento;
        this.mcpStatus = mcpStatus;
        this.mcpObservacoes = mcpObservacoes;
-       this.mcpVendasProdutoses = mcpVendasProdutoses;
+       
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -136,18 +136,6 @@ public class McpVendas  implements java.io.Serializable {
     public void setMcpObservacoes(String mcpObservacoes) {
         this.mcpObservacoes = mcpObservacoes;
     }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="mcpVendas")
-    public Set getMcpVendasProdutoses() {
-        return this.mcpVendasProdutoses;
-    }
-    
-    public void setMcpVendasProdutoses(Set mcpVendasProdutoses) {
-        this.mcpVendasProdutoses = mcpVendasProdutoses;
-    }
-
-
-
 
 }
 

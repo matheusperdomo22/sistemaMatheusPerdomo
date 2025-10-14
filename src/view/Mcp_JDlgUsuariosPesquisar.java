@@ -4,21 +4,34 @@
  * and open the template in the editor.
  */
 package view;
-
+import bean.McpUsuarios;
+import dao.Mcp_UsuariosDAO;
+import java.util.List;
+import view.Mcp_JDlgUsuarios;
 /**
  *
  * @author Samsung
  */
 public class Mcp_JDlgUsuariosPesquisar extends javax.swing.JDialog {
-
+    private Mcp_JDlgUsuarios Mcp_jDlgUsuarios;
+    Mcp_ControllerUsuarios Mcp_controllerUsuarios;
     /**
      * Creates new form Mcp_JDlgUsuariosPesquisar
      */
     public Mcp_JDlgUsuariosPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-         setTitle("Pesquisar Usuarios");
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Pesquisar Usuários");
+
+        Mcp_controllerUsuarios = new Mcp_ControllerUsuarios();
+        Mcp_UsuariosDAO mcpusuariosDAO = new Mcp_UsuariosDAO();
+        List lista = (List) mcpusuariosDAO.listAll();
+        Mcp_controllerUsuarios.setList(lista);
+        jTable1.setModel(Mcp_controllerUsuarios);
+    }
+    public void setTelaAnterior( Mcp_JDlgUsuarios Mcp_jDlgUsuarios) {
+        this.Mcp_jDlgUsuarios = Mcp_jDlgUsuarios;
     }
 
     /**
@@ -85,7 +98,9 @@ public class Mcp_JDlgUsuariosPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-        dispose();
+        McpUsuarios mcpusuarios =  Mcp_controllerUsuarios.getBean( jTable1.getSelectedRow() );
+        Mcp_jDlgUsuarios.beanView(mcpusuarios);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**

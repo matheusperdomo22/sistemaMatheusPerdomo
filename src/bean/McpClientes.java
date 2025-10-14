@@ -44,7 +44,7 @@ public class McpClientes  implements java.io.Serializable {
      private Date mcpDataNascimento;
      private double mcpRendaMensal;
      private String mcpObservacoes;
-     private Set mcpVendases = new HashSet(0);
+     
 
     public McpClientes() {
     }
@@ -71,7 +71,7 @@ public class McpClientes  implements java.io.Serializable {
        this.mcpDataNascimento = mcpDataNascimento;
        this.mcpRendaMensal = mcpRendaMensal;
        this.mcpObservacoes = mcpObservacoes;
-       this.mcpVendases = mcpVendases;
+       
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -225,19 +225,6 @@ public class McpClientes  implements java.io.Serializable {
     public void setMcpObservacoes(String mcpObservacoes) {
         this.mcpObservacoes = mcpObservacoes;
     }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="mcpClientes")
-    public Set getMcpVendases() {
-        return this.mcpVendases;
-    }
-    
-    public void setMcpVendases(Set mcpVendases) {
-        this.mcpVendases = mcpVendases;
-    }
-
-
-
-
 }
 
 

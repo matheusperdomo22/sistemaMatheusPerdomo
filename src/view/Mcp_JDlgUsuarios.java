@@ -4,16 +4,18 @@
  * and open the template in the editor.
  */
 package view;
-
-import javax.swing.JOptionPane;
+import bean.McpUsuarios;
+import dao.Mcp_UsuariosDAO;
 import tools.mcp_util;
+import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author Samsung
  */
 public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
-
+        private boolean incluir;
     /**
      * Creates new form Mcp_JDlgUsuarios
      */
@@ -25,6 +27,43 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
         mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
         jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jBtnCancelar);
     }
+    public void beanView(McpUsuarios mcpusuarios) {
+        jTxtCodigo.setText(mcp_util.intToStr(mcpusuarios.getMcpIdUsuario()));
+        jTxtNome.setText(mcpusuarios.getMcpNome());
+        jTxtApelido.setText(mcpusuarios.getMcpApelido());
+        jFmtCpf.setText(mcpusuarios.getMcpCpf());
+        jFmtDataNascimento.setText(mcp_util.dateToStr(mcpusuarios.getMcpDataNascimento()));
+        jPwdSenha.setText(mcpusuarios.getMcpSenha());
+        jCboNivel.setSelectedIndex(mcp_util.strToInt(mcpusuarios.getMcpNivel()));
+        //jChbAtivo.setSelected( mcpusuarios.getAtivo().equals("S"));
+        if (mcpusuarios.getMcpAtivo().equals("S") == true) {
+            jChbAtivo.setSelected(true);
+        } else {
+            jChbAtivo.setSelected(false);
+        }
+
+    }
+
+    public McpUsuarios viewBean() {
+        McpUsuarios mcpusuarios = new McpUsuarios();
+        int codigo = mcp_util.strToInt(jTxtCodigo.getText());
+        mcpusuarios.setMcpIdUsuario(codigo);
+        //mcpusuarios.setIdmcpusuarios(Util.strToInt( jTxtCodigo.getText() ));
+
+        mcpusuarios.setMcpNome(jTxtNome.getText());
+        mcpusuarios.setMcpApelido(jTxtApelido.getText());
+        mcpusuarios.setMcpCpf(jFmtCpf.getText());
+        mcpusuarios.setMcpDataNascimento(mcp_util.strToDate(jFmtDataNascimento.getText()));
+        mcpusuarios.setMcpSenha(jPwdSenha.getText());
+        mcpusuarios.setMcpNivel(mcp_util.intToStr(jCboNivel.getSelectedIndex()));
+        if (jChbAtivo.isSelected() == true) {
+            mcpusuarios.setMcpAtivo("S");
+        } else {
+            mcpusuarios.setMcpAtivo("N");
+        }
+        return mcpusuarios;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -282,7 +321,10 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
 mcp_util.habilitar(true, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
         jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jBtnCancelar);
-         mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);        // TODO add your handling code here:
+         mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar); 
+         mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
+                jPwdSenha, jCboNivel, jChbAtivo);
+        incluir = true;// TODO add your handling code here:
         
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
@@ -295,11 +337,26 @@ mcp_util.habilitar(true, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtAp
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if(mcp_util.pergunta("deseja excluir?")) {
         JOptionPane.showMessageDialog(null, "Excluido");}
+        Mcp_UsuariosDAO mcpusuariosDAO = new Mcp_UsuariosDAO();
+            mcpusuariosDAO.delete(viewBean());
+        
+        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
+                jPwdSenha, jCboNivel, jChbAtivo);
    
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         // TODO add your handling code here:
+        
+        Mcp_UsuariosDAO mcp_usuariosDAO = new Mcp_UsuariosDAO();
+        McpUsuarios mcp_usuarios = viewBean();
+        if (incluir == true) {
+            mcp_usuariosDAO.insert(mcp_usuarios);
+            //usuariosDAO.insert( viewBean() );
+        } else {
+            mcp_usuariosDAO.update(mcp_usuarios);
+            //usuariosDAO.update( viewBean() );
+        }
         mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
         jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jPwdSenha, jBtnCancelar);
        
@@ -312,8 +369,11 @@ mcp_util.habilitar(true, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtAp
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
         // TODO add your handling code here:
- Mcp_JDlgUsuariosPesquisar telaPesquisar = new Mcp_JDlgUsuariosPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+        
+        
+        Mcp_JDlgUsuariosPesquisar Mcp_jDlgUsuariosPesquisar = new Mcp_JDlgUsuariosPesquisar(null, true);
+        Mcp_jDlgUsuariosPesquisar.setTelaAnterior(this);
+        Mcp_jDlgUsuariosPesquisar.setVisible(true);
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
