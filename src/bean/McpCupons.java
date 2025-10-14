@@ -100,7 +100,7 @@ public class McpCupons  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="mcp_dataValidade", nullable=false, length=10)
+    @Column(name="mcp_dataValidade", length=10)
     public Date getMcpDataValidade() {
         return this.mcpDataValidade;
     }

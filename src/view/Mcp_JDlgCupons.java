@@ -5,6 +5,8 @@
  */
 package view;
 
+import bean.McpCupons;
+import dao.Mcp_CuponsDAO;
 import javax.swing.JOptionPane;
 import tools.mcp_util;
 
@@ -13,15 +15,48 @@ import tools.mcp_util;
  * @author Samsung
  */
 public class Mcp_JDlgCupons extends javax.swing.JDialog {
-
+        private boolean incluir;
     /**
      * Creates new form Mcp_Cupons
      */
     public Mcp_JDlgCupons(java.awt.Frame parent, boolean modal) {
-       super(parent, modal);
+        super(parent, modal);
         initComponents();
+        setTitle("Cadastro de Cupons");
         setLocationRelativeTo(null);
-        setTitle("Cupons");
+        mcp_util.habilitar(false, jTxtCodigo, jTxtDescricao, jTxtUltilizacoes, jTxtTipodesconto, jFmtDataValidade, jTxtNomeCupom, jChbAtivo, jBtnConfirmar, jBtnCancelar);
+    }
+
+    public void beanView(McpCupons mcpcupons) {
+        jTxtCodigo.setText(mcp_util.intToStr(mcpcupons.getMcpIdCupom()));
+        jTxtDescricao.setText(mcpcupons.getMcpDescricao());
+        jTxtUltilizacoes.setText(mcpcupons.getMcpUtilizacoes());
+        jTxtTipodesconto.setText(mcpcupons.getMcpTipoDesconto());
+        jFmtDataValidade.setText(mcp_util.dateToStr(mcpcupons.getMcpDataValidade()));
+        jTxtNomeCupom.setText(mcpcupons.getMcpNome());
+        if (mcpcupons.getMcpAtivo().equals("S") == true) {
+            jChbAtivo.setSelected(true);
+        } else {
+            jChbAtivo.setSelected(false);
+        }
+
+    }
+
+    public McpCupons viewBean() {
+        McpCupons mcpcupons = new McpCupons();
+        int codigo = mcp_util.strToInt(jTxtCodigo.getText());
+        mcpcupons.setMcpIdCupom(codigo);
+        mcpcupons.setMcpDescricao(jTxtDescricao.getText());
+        mcpcupons.setMcpUtilizacoes(jTxtUltilizacoes.getText());
+        mcpcupons.setMcpTipoDesconto(jTxtTipodesconto.getText());
+        mcpcupons.setMcpDataValidade(mcp_util.strToDate(jFmtDataValidade.getText()));
+        mcpcupons.setMcpNome(jTxtNomeCupom.getText());
+        if (jChbAtivo.isSelected() == true) {
+            mcpcupons.setMcpAtivo("S");
+        } else {
+            mcpcupons.setMcpAtivo("N");
+        }
+        return mcpcupons;
     }
 
     /**
@@ -52,8 +87,6 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
         jBtnCancelar = new javax.swing.JButton();
         jBtnIncluir2 = new javax.swing.JButton();
         jBtnAlterar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jTxtValorDesconto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -124,8 +157,6 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Valor do desconto");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,11 +190,8 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
                             .addComponent(jLabel6)
                             .addComponent(jTxtNomeCupom, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTxtValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jChbAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jChbAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(289, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(jBtnIncluir2)
@@ -197,14 +225,12 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtTipodesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFmtDataValidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtNomeCupom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtNomeCupom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnIncluir2)
@@ -224,82 +250,89 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
     }//GEN-LAST:event_jChbAtivoActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-       if (mcp_util.pergunta("Deseja realmente excluir este cupom?")) {
-        
-        JOptionPane.showMessageDialog(null, "Cupom excluído com sucesso!");
 
+            if(mcp_util.pergunta("Deseja realmente excluir este cupom??")) {
+        JOptionPane.showMessageDialog(null, "Cupom excluído com sucesso!");}
+        Mcp_CuponsDAO mcpcuponsDAO = new Mcp_CuponsDAO();
+            mcpcuponsDAO.delete(viewBean());
+
+            mcp_util.limpar(
+                    jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                    jFmtDataValidade, jTxtUltilizacoes, jChbAtivo
+            );
+            mcp_util.habilitar(false,
+                    jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                    jFmtDataValidade, jTxtUltilizacoes, jChbAtivo,
+                    jBtnConfirmar, jBtnCancelar
+            );
+            mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnPesquisar);
         
-        mcp_util.limpar(
-            jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-            jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto, jChbAtivo
-        );
-        mcp_util.habilitar(false,
-            jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-            jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto, jChbAtivo,
-            jBtnConfirmar, jBtnCancelar
-        ); 
-        mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnPesquisar);
-    }
 
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-        // TODO add your handling code here:
+        Mcp_CuponsDAO mcp_cuponsDAO = new Mcp_CuponsDAO();
+        McpCupons mcp_cupons = viewBean();
+        if (incluir == true) {
+            mcp_cuponsDAO.insert(mcp_cupons);
+        } else {
+            mcp_cuponsDAO.update(mcp_cupons);
+        }  
         mcp_util.habilitar(false,
-        jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-        jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
+                jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                jFmtDataValidade, jTxtUltilizacoes, jChbAtivo,
+                jBtnConfirmar, jBtnCancelar
+        );
 
-    // Habilita os botões de ação novamente
-    mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-
-    // Mensagem de sucesso
-    JOptionPane.showMessageDialog(this, "Cupom salvo com sucesso!");
+        mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        JOptionPane.showMessageDialog(this, "Cupom salvo com sucesso!");
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
         // TODO add your handling code here:
-        Mcp_JDlgCuponsPesquisar telaPesquisar = new Mcp_JDlgCuponsPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+        Mcp_JDlgCuponsPesquisar Mcp_jDlgCuponsPesquisar = new Mcp_JDlgCuponsPesquisar(null, true);
+        Mcp_jDlgCuponsPesquisar.setTelaAnterior(this);
+        Mcp_jDlgCuponsPesquisar.setVisible(true);
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
         mcp_util.habilitar(false,
-        jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-        jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
+                jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                jFmtDataValidade, jTxtUltilizacoes, jChbAtivo,
+                jBtnConfirmar, jBtnCancelar
+        );
 
-    mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
 
-    mcp_util.limpar(
-        jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-        jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto
-    );
+        mcp_util.limpar(
+                jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                jFmtDataValidade, jTxtUltilizacoes
+        );
 
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnIncluir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluir2ActionPerformed
         mcp_util.habilitar(true,
-        jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-        jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
+                jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                jFmtDataValidade, jTxtUltilizacoes, jChbAtivo,
+                jBtnConfirmar, jBtnCancelar
+        );
 
-    mcp_util.habilitar(false, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-    // TODO add your handling code here:
+        mcp_util.habilitar(false, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.limpar(jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                jFmtDataValidade, jTxtUltilizacoes, jChbAtivo);
+        incluir = true;
+        // TODO add your handling code here:
     }//GEN-LAST:event_jBtnIncluir2ActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
         mcp_util.habilitar(true,
-        jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
-        jFmtDataValidade, jTxtUltilizacoes, jTxtValorDesconto, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
+                jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
+                jFmtDataValidade, jTxtUltilizacoes, jChbAtivo,
+                jBtnConfirmar, jBtnCancelar
+        );
 
-   
-    mcp_util.habilitar(false, jTxtCodigo, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.habilitar(false, jTxtCodigo, jBtnIncluir2, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     /**
@@ -350,14 +383,11 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
     private javax.swing.JButton jBtnCancelar;
     private javax.swing.JButton jBtnConfirmar;
     private javax.swing.JButton jBtnExcluir;
-    private javax.swing.JButton jBtnIncluir;
-    private javax.swing.JButton jBtnIncluir1;
     private javax.swing.JButton jBtnIncluir2;
     private javax.swing.JButton jBtnPesquisar;
     private javax.swing.JCheckBox jChbAtivo;
     private javax.swing.JFormattedTextField jFmtDataValidade;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -368,6 +398,5 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
     private javax.swing.JTextField jTxtNomeCupom;
     private javax.swing.JTextField jTxtTipodesconto;
     private javax.swing.JTextField jTxtUltilizacoes;
-    private javax.swing.JTextField jTxtValorDesconto;
     // End of variables declaration//GEN-END:variables
 }

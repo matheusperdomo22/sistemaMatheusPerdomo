@@ -5,12 +5,18 @@
  */
 package view;
 
+import bean.McpCupons;
+import dao.Mcp_CuponsDAO;
+
+import java.util.List;
+
 /**
  *
  * @author Samsung
  */
 public class Mcp_JDlgCuponsPesquisar extends javax.swing.JDialog {
-
+    private Mcp_JDlgCupons Mcp_jDlgCupons;
+    Mcp_ControllerCupons Mcp_controllerCupons;
     /**
      * Creates new form Mcp_CuponsPesquisar
      */
@@ -19,7 +25,18 @@ public class Mcp_JDlgCuponsPesquisar extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Tela de Pesquisa de Cupons");
+        
+        Mcp_controllerCupons = new Mcp_ControllerCupons();
+        Mcp_CuponsDAO mcpcuponsDAO = new Mcp_CuponsDAO();
+        List lista = (List) mcpcuponsDAO.listAll();
+        Mcp_controllerCupons.setList(lista);
+        jTable1.setModel(Mcp_controllerCupons);
     }
+    
+    public void setTelaAnterior( Mcp_JDlgCupons Mcp_jDlgCupons) {
+        this.Mcp_jDlgCupons = Mcp_jDlgCupons;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,7 +98,9 @@ public class Mcp_JDlgCuponsPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-        dispose();
+        McpCupons mcpcupons =  Mcp_controllerCupons.getBean( jTable1.getSelectedRow() );
+        Mcp_jDlgCupons.beanView(mcpcupons);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**
