@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="vendas"/>
+  <table-filter match-name="mcp_clientes"/>
+  <table-filter match-name="mcp_vendas_produtos"/>
+  <table-filter match-name="mcp_cupons"/>
+  <table-filter match-name="mcp_vendas"/>
+  <table-filter match-name="mcp_produtos"/>
+  <table-filter match-name="mcp_usuarios"/>
+</hibernate-reverse-engineering>
