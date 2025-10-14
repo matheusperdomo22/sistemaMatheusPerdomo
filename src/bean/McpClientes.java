@@ -137,7 +137,7 @@ public class McpClientes  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="mcp_dataCadastro", nullable=false, length=10)
+    @Column(name="mcp_dataCadastro", length=10)
     public Date getMcpDataCadastro() {
         return this.mcpDataCadastro;
     }
@@ -197,7 +197,7 @@ public class McpClientes  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="mcp_dataNascimento", nullable=false, length=10)
+    @Column(name="mcp_dataNascimento", length=10)
     public Date getMcpDataNascimento() {
         return this.mcpDataNascimento;
     }

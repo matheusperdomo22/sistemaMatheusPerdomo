@@ -4,25 +4,25 @@
  */
 package view;
 
-import bean.McpUsuarios;
+import bean.McpClientes;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class Mcp_ControllerUsuarios extends AbstractTableModel {
+public class Mcp_ControllerClientes extends AbstractTableModel {
 
-    private List lstUsuarios;
+    private List lstClientes;
 
-    public void setList(List lstUsuarios) {
-        this.lstUsuarios = lstUsuarios;
+    public void setList(List lstClientes) {
+        this.lstClientes = lstClientes;
     }
     
-    public McpUsuarios getBean(int rowIndex) {
-        return (McpUsuarios) lstUsuarios.get(rowIndex);
+    public McpClientes getBean(int rowIndex) {
+        return (McpClientes) lstClientes.get(rowIndex);
     }
 
     @Override
     public int getRowCount() {
-        return lstUsuarios.size();
+        return lstClientes.size();
                 
     }
 
@@ -33,13 +33,11 @@ public class Mcp_ControllerUsuarios extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        McpUsuarios mcpusuarios = (McpUsuarios) lstUsuarios.get( rowIndex);
+        McpClientes mcpusuarios = (McpClientes) lstClientes.get( rowIndex);
         if ( columnIndex == 0 ){
-            return mcpusuarios.getMcpIdUsuario();
+            return mcpusuarios.getMcpIdClientes();
         } else if (columnIndex ==1) {
             return mcpusuarios.getMcpNome();        
-        } else if (columnIndex ==2) {
-            return mcpusuarios.getMcpApelido();
         } else if (columnIndex ==3) {
             return mcpusuarios.getMcpCpf();
         }
@@ -53,7 +51,7 @@ public class Mcp_ControllerUsuarios extends AbstractTableModel {
         } else if ( columnIndex == 1) {
             return "Nome";         
         } else if ( columnIndex == 2) {
-            return "Apelido";
+            return "Telefone";
         } else if ( columnIndex == 3) {
             return "Cpf";
         } 

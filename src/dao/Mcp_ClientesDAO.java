@@ -47,7 +47,7 @@ public class Mcp_ClientesDAO extends AbstractDAO{
     public Object list(int codigo) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpClientes.class);
-        criteria.add(Restrictions.eq("idclientes", codigo));
+        criteria.add(Restrictions.eq("IdClientes", codigo));
         List lista = criteria.list();
         session.getTransaction().commit();        
         return lista;

@@ -5,6 +5,9 @@
  */
 package view;
 
+import bean.McpClientes;
+import dao.Mcp_ClientesDAO;
+import javax.swing.JOptionPane;
 import tools.mcp_util;
 
 /**
@@ -12,7 +15,7 @@ import tools.mcp_util;
  * @author Samsung
  */
 public class Mcp_JDlgClientes extends javax.swing.JDialog {
-
+        private boolean incluir;
     /**
      * Creates new form Mcp_JDlgClientes
      */
@@ -27,6 +30,56 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         jBtnConfirmar, jBtnCancelar
     );
     }
+    public void beanView(McpClientes mcpclientes) {
+        jTxtCodigo.setText(mcp_util.intToStr(mcpclientes.getMcpIdClientes()));
+        jTxtNome.setText(mcpclientes.getMcpNome());
+        
+        jFmtCpf.setText(mcpclientes.getMcpCpf());
+        jTxtSexo.setText(mcpclientes.getMcpSexo());
+        jFmtDataNascimento.setText(mcp_util.dateToStr(mcpclientes.getMcpDataNascimento()));
+        jFmtDataCadastro.setText(mcp_util.dateToStr(mcpclientes.getMcpDataCadastro()));
+        jTxtEstado.setText(mcpclientes.getMcpEstado());
+        jTxtCidade1.setText(mcpclientes.getMcpCidade());
+        jTxtCep1.setText(mcpclientes.getMcpCep());
+        jTxtEndereco1.setText(mcpclientes.getMcpEndereco());
+        jFmtTelefone.setText(mcpclientes.getMcpTelefone());
+        jTxtRendamensal.setText(mcp_util.doubleToStr(mcpclientes.getMcpRendaMensal()));
+        jTxtEmail.setText(mcpclientes.getMcpEmail());
+        jTxtObservacoes.setText(mcpclientes.getMcpObservacoes());
+        
+        //jChbAtivo.setSelected( mcpclientes.getAtivo().equals("S"));
+        if (mcpclientes.getMcpAtivo().equals("S") == true) {
+            jChbAtivo.setSelected(true);
+        } else {
+            jChbAtivo.setSelected(false);
+        }
+
+    }
+
+    public McpClientes viewBean() {
+        McpClientes mcpclientes = new McpClientes();
+        int codigo = mcp_util.strToInt(jTxtCodigo.getText());
+        mcpclientes.setMcpIdClientes(codigo);
+        mcpclientes.setMcpNome(jTxtNome.getText());
+        mcpclientes.setMcpCpf(jFmtCpf.getText());
+        mcpclientes.setMcpSexo(jTxtSexo.getText());
+        mcpclientes.setMcpDataNascimento(mcp_util.strToDate(jFmtDataNascimento.getText()));
+        mcpclientes.setMcpDataCadastro(mcp_util.strToDate(jFmtDataCadastro.getText()));
+        mcpclientes.setMcpEstado(jTxtEstado.getText());
+        mcpclientes.setMcpCidade(jTxtCidade1.getText());
+        mcpclientes.setMcpCep(jTxtCep1.getText());
+        mcpclientes.setMcpEndereco(jTxtEndereco1.getText());
+        mcpclientes.setMcpTelefone(jFmtTelefone.getText());
+        mcpclientes.setMcpRendaMensal(mcp_util.strToDouble(jTxtRendamensal.getText()));
+        mcpclientes.setMcpEmail(jTxtEmail.getText());
+        if (jChbAtivo.isSelected() == true) {
+            mcpclientes.setMcpAtivo("S");
+        } else {
+            mcpclientes.setMcpAtivo("N");
+        }
+        return mcpclientes;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -349,78 +402,99 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
         mcp_util.habilitar(true, 
-        jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-        jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-        jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
-
-    mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);        // TODO add your handling code here:
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
+            jBtnConfirmar, jBtnCancelar);
+    
+    mcp_util.habilitar(false, 
+            jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+    
+    mcp_util.limpar(
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo);
+    
+    incluir = true;        // TODO add your handling code here:
 
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
         mcp_util.habilitar(true, 
-        jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-        jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-        jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
-
-    mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
+            jBtnConfirmar, jBtnCancelar);
+    
+    mcp_util.habilitar(false, 
+            jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if(mcp_util.pergunta("Deseja excluir?")) {
-        mcp_util.mensagem("Excluído com sucesso!");
+        if (mcp_util.pergunta("Deseja excluir?")) {
+        JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+        
+        Mcp_ClientesDAO mcpclientesDAO = new Mcp_ClientesDAO();
+        mcpclientesDAO.delete(viewBean());
+        
         mcp_util.limpar(
-            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes
+                jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+                jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+                jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo
         );
+    
     }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         // TODO add your handling code here:
-        mcp_util.habilitar(false, 
-        jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-        jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-        jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
+        Mcp_ClientesDAO mcp_clientesDAO = new Mcp_ClientesDAO();
+        McpClientes mcp_clientes = viewBean();
 
-    mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+    if (incluir == true) {
+        mcp_clientesDAO.insert(mcp_clientes);
+    } else {
+        mcp_clientesDAO.update(mcp_clientes);
+    }
+
+    mcp_util.habilitar(false, 
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
+            jBtnConfirmar, jBtnCancelar);
+
+    mcp_util.habilitar(true, 
+            jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
 
     mcp_util.limpar(
-        jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-        jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-        jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes
-    );
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo);
+
 
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
         // TODO add your handling code here:
-        Mcp_JDlgUsuariosPesquisar telaPesquisar = new Mcp_JDlgUsuariosPesquisar(null, true);
-        telaPesquisar.setVisible(true);
+        Mcp_JDlgClientesPesquisar Mcp_jDlgClientesPesquisar = new Mcp_JDlgClientesPesquisar(null, true);
+        Mcp_jDlgClientesPesquisar.setTelaAnterior(this);
+        Mcp_jDlgClientesPesquisar.setVisible(true);
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
         mcp_util.habilitar(false, 
-        jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-        jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-        jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
-        jBtnConfirmar, jBtnCancelar
-    );
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
+            jBtnConfirmar, jBtnCancelar);
 
-    mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+    mcp_util.habilitar(true, 
+            jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
 
     mcp_util.limpar(
-        jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
-        jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
-        jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes
-    );
+            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
+            jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     /**

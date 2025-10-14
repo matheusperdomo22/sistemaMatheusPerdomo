@@ -5,21 +5,37 @@
  */
 package view;
 
+import bean.McpClientes;
+import bean.McpUsuarios;
+import dao.Mcp_ClientesDAO;
+import java.util.List;
+
 /**
  *
  * @author Samsung
  */
 public class Mcp_JDlgClientesPesquisar extends javax.swing.JDialog {
-
+    private Mcp_JDlgClientes Mcp_JDlgClientes;
+    Mcp_ControllerClientes Mcp_controllerClientes;
     /**
      * Creates new form Mcp_JDlgClientesPesquisar
      */
     public Mcp_JDlgClientesPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Pesquisar Clientes");
-    setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
+        setTitle("Pesquisar Usuários");
+
+        Mcp_controllerClientes = new Mcp_ControllerClientes();
+        Mcp_ClientesDAO mcpclientesDAO = new Mcp_ClientesDAO();
+        List lista = (List) mcpclientesDAO.listAll();
+        Mcp_controllerClientes.setList(lista);
+        jTable1.setModel(Mcp_controllerClientes);
     }
+    public void setTelaAnterior(Mcp_JDlgClientes mcp_JDlgClientes) {
+    this.Mcp_JDlgClientes = mcp_JDlgClientes;
+}
+
  
 
     /**
@@ -82,7 +98,9 @@ public class Mcp_JDlgClientesPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-      dispose();
+     McpClientes mcpclientes =  Mcp_controllerClientes.getBean( jTable1.getSelectedRow() );
+        Mcp_JDlgClientes.beanView(mcpclientes);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**
