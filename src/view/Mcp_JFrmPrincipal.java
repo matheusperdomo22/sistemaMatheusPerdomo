@@ -160,8 +160,8 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMnuSairActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-
-
+        new view.Mcp_JDlgVendas(this, true).setVisible(true);
+        
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

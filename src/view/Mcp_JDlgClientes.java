@@ -23,7 +23,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-         mcp_util.habilitar(false, 
+         mcp_util.habilitar(false, jBtnEnviarEmail, 
         jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
         jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
         jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
@@ -46,8 +46,6 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         jTxtRendamensal.setText(mcp_util.doubleToStr(mcpclientes.getMcpRendaMensal()));
         jTxtEmail.setText(mcpclientes.getMcpEmail());
         jTxtObservacoes.setText(mcpclientes.getMcpObservacoes());
-        
-        //jChbAtivo.setSelected( mcpclientes.getAtivo().equals("S"));
         if (mcpclientes.getMcpAtivo().equals("S") == true) {
             jChbAtivo.setSelected(true);
         } else {
@@ -72,6 +70,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         mcpclientes.setMcpTelefone(jFmtTelefone.getText());
         mcpclientes.setMcpRendaMensal(mcp_util.strToDouble(jTxtRendamensal.getText()));
         mcpclientes.setMcpEmail(jTxtEmail.getText());
+        mcpclientes.setMcpObservacoes(jTxtObservacoes.getText());
         if (jChbAtivo.isSelected() == true) {
             mcpclientes.setMcpAtivo("S");
         } else {
@@ -125,6 +124,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         jBtnConfirmar = new javax.swing.JButton();
         jBtnPesquisar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
+        jBtnEnviarEmail = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -231,6 +231,14 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
             }
         });
 
+        jBtnEnviarEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-enviar-24.png"))); // NOI18N
+        jBtnEnviarEmail.setText("Enviar Email");
+        jBtnEnviarEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEnviarEmailActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,30 +248,41 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnAlterar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnExcluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnConfirmar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnCancelar)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnPesquisar)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBtnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnConfirmar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnPesquisar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 19, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBtnEnviarEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(222, 222, 222)
+                .addComponent(jLabel10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel11)
-                            .addGap(167, 167, 167)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
+                            .addGap(285, 285, 285)
                             .addComponent(jLabel9))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jFmtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jTxtRendamensal, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTxtRendamensal, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addGap(94, 94, 94)
@@ -276,10 +295,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
                                 .addComponent(jLabel6))
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel13)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel13)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
@@ -308,12 +324,20 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
                         .addComponent(jLabel14)
                         .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(297, Short.MAX_VALUE)))
+                    .addContainerGap(326, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(495, Short.MAX_VALUE)
+                .addContainerGap(145, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(141, 141, 141)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBtnEnviarEmail)
+                    .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(126, 126, 126)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnIncluir)
                     .addComponent(jBtnAlterar)
@@ -337,9 +361,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel9))
+                            .addComponent(jLabel9)
                             .addGap(15, 15, 15))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -367,18 +389,16 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
                     .addGap(28, 28, 28)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
-                        .addComponent(jLabel11)
-                        .addComponent(jLabel15))
+                        .addComponent(jLabel11))
                     .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jFmtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtRendamensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTxtRendamensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addComponent(jLabel14)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(81, Short.MAX_VALUE)))
+                    .addContainerGap(89, Short.MAX_VALUE)))
         );
 
         pack();
@@ -405,7 +425,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
             jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
             jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
             jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
-            jBtnConfirmar, jBtnCancelar);
+            jBtnConfirmar, jBtnCancelar,jBtnEnviarEmail);
     
     mcp_util.habilitar(false, 
             jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
@@ -497,6 +517,27 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
             jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
+    private void jBtnEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarEmailActionPerformed
+        // TODO add your handling code here:
+        
+         String destinatario = jTxtEmail.getText();
+    if(destinatario.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Digite um e-mail para enviar!");
+        return;
+    }
+
+    String assunto = "Assunto do E-mail";
+    String mensagem = "Olá, este é um e-mail do Sistema do Matheus";
+
+    boolean enviado = tools.EmailUtil.enviarEmail(destinatario, assunto, mensagem);
+    if(enviado) {
+        JOptionPane.showMessageDialog(this, "E-mail enviado com sucesso!");
+    } else {
+        JOptionPane.showMessageDialog(this, "Falha ao enviar o e-mail.");
+    }
+    mcp_util.habilitar(true);
+    }//GEN-LAST:event_jBtnEnviarEmailActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -543,6 +584,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
     private javax.swing.JButton jBtnAlterar;
     private javax.swing.JButton jBtnCancelar;
     private javax.swing.JButton jBtnConfirmar;
+    private javax.swing.JButton jBtnEnviarEmail;
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JButton jBtnIncluir;
     private javax.swing.JButton jBtnPesquisar;
