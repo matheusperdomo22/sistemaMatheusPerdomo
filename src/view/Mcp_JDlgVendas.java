@@ -22,13 +22,11 @@ import tools.mcp_util;
  */
 public class Mcp_JDlgVendas extends javax.swing.JDialog {
     private boolean incluir;
-    /**
-     * Creates new form Mcp_JDlgVendas
-     */
+    
     public Mcp_JDlgVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Vendas");
+        setTitle("Tela de Vendas");
         setLocationRelativeTo(null);
         mcp_util.habilitar(false, 
     jTxtCodigo, jCboClientes,jCboCupons,jFmtData,jTxtFormadePagamento,jTxtObservacoes,jTxtTotal,jBtnConfirmar,jBtnCancelar

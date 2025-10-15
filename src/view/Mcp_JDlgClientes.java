@@ -23,6 +23,7 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Tela de Clientes");
          mcp_util.habilitar(false, jBtnEnviarEmail, 
         jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
         jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,

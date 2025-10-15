@@ -24,7 +24,7 @@ public class Mcp_JDlgClientesPesquisar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Usuários");
+        setTitle("Pesquisar Clientes");
 
         Mcp_controllerClientes = new Mcp_ControllerClientes();
         Mcp_ClientesDAO mcpclientesDAO = new Mcp_ClientesDAO();

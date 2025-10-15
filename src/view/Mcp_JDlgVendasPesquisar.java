@@ -22,7 +22,7 @@ public class Mcp_JDlgVendasPesquisar extends javax.swing.JDialog {
         initComponents();
         
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Usuários");
+        setTitle("Pesquisar Vendas");
 
         Mcp_controllerVendas = new Mcp_ControllerVendas();
         Mcp_VendasDAO mcpvendasDAO = new Mcp_VendasDAO();

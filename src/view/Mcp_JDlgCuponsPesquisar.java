@@ -17,9 +17,6 @@ import java.util.List;
 public class Mcp_JDlgCuponsPesquisar extends javax.swing.JDialog {
     private Mcp_JDlgCupons Mcp_jDlgCupons;
     Mcp_ControllerCupons Mcp_controllerCupons;
-    /**
-     * Creates new form Mcp_CuponsPesquisar
-     */
     public Mcp_JDlgCuponsPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();

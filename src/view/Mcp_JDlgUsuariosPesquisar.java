@@ -15,9 +15,6 @@ import view.Mcp_JDlgUsuarios;
 public class Mcp_JDlgUsuariosPesquisar extends javax.swing.JDialog {
     private Mcp_JDlgUsuarios Mcp_jDlgUsuarios;
     Mcp_ControllerUsuarios Mcp_controllerUsuarios;
-    /**
-     * Creates new form Mcp_JDlgUsuariosPesquisar
-     */
     public Mcp_JDlgUsuariosPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();

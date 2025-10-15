@@ -16,10 +16,6 @@ import java.util.List;
 public class Mcp_JDlgProdutoPesquisar extends javax.swing.JDialog {
     private Mcp_JDlgProduto mcp_JDlgProduto;
     Mcp_ControllerProduto mcp_controllerProduto;
-    /**
-    /**
-     * Creates new form Mcp_JDlgProdutoPesquisar
-     */
     public Mcp_JDlgProdutoPesquisar(java.awt.Frame parent, boolean modal) {
        super(parent, modal);
         initComponents();
