@@ -128,7 +128,18 @@ public class McpCupons  implements java.io.Serializable {
     public void setMcpUtilizacoes(String mcpUtilizacoes) {
         this.mcpUtilizacoes = mcpUtilizacoes;
     }
-
+    @Override
+    public String toString() {
+    return this.getMcpNome(); 
+}
+    @Override
+public boolean equals(Object obj) {
+    if (obj instanceof McpCupons) {
+        McpCupons mcpcupons = (McpCupons) obj;
+        return this.getMcpIdCupom()== mcpcupons.getMcpIdCupom();
+    }
+    return false;
+}
 }
 
 

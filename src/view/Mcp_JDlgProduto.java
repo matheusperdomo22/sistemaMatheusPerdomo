@@ -280,7 +280,7 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
                 jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao,
                 jBtnConfirmar, jBtnCancelar);
 
-        mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.habilitar(false, jTxtCodigo,jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
     
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 

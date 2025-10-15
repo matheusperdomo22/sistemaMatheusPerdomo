@@ -421,13 +421,13 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
         mcp_util.habilitar(true, 
-            jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
+            jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
             jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
             jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo,
             jBtnConfirmar, jBtnCancelar);
     
     mcp_util.habilitar(false, 
-            jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+            jTxtCodigo,jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed

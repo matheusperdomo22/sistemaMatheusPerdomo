@@ -331,7 +331,7 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
        mcp_util.habilitar(true, jTxtNome, jFmtDataNascimento,jFmtCpf,jTxtApelido,
         jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jBtnCancelar);
-         mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+         mcp_util.habilitar(false,jTxtCodigo, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed

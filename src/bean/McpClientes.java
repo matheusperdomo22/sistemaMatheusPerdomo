@@ -225,6 +225,18 @@ public class McpClientes  implements java.io.Serializable {
     public void setMcpObservacoes(String mcpObservacoes) {
         this.mcpObservacoes = mcpObservacoes;
     }
+    @Override
+    public String toString() {
+    return this.getMcpNome(); 
+}
+    @Override
+public boolean equals(Object obj) {
+    if (obj instanceof McpClientes) {
+        McpClientes mcpclientes = (McpClientes) obj;
+        return this.getMcpIdClientes()== mcpclientes.getMcpIdClientes();
+    }
+    return false;
+}
 }
 
 
