@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="mcp_vendas"
-    ,catalog="vendas"
+    ,catalog="db_matheus_perdomo"
 )
 public class McpVendas  implements java.io.Serializable {
 
