@@ -17,6 +17,8 @@ import org.hibernate.criterion.Restrictions;
  * @author u1845853
  */
 public class Mcp_UsuariosDAO extends AbstractDAO{
+    
+    
 
     @Override
     public void insert(Object object) {
@@ -47,7 +49,7 @@ public class Mcp_UsuariosDAO extends AbstractDAO{
     public Object list(int codigo) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpUsuarios.class);
-        criteria.add(Restrictions.eq("idusuarios", codigo));
+        criteria.add(Restrictions.eq("mcpIdUsuario", codigo));
         List lista = criteria.list();
         session.getTransaction().commit();        
         return lista;
@@ -61,6 +63,27 @@ public class Mcp_UsuariosDAO extends AbstractDAO{
         session.getTransaction().commit();        
         return lista;    
     }
+    public McpUsuarios autenticar(String apelido, String senha) {
+    session.beginTransaction();
+    try {
+        Criteria criteria = session.createCriteria(McpUsuarios.class);
+        criteria.add(Restrictions.eq("mcpApelido", apelido));
+        criteria.add(Restrictions.eq("mcpSenha", senha));
+        criteria.add(Restrictions.eq("mcpAtivo", "S")); 
+        
+        List<McpUsuarios> lista = criteria.list();
+        session.getTransaction().commit();
+        
+        if (lista != null && !lista.isEmpty()) {
+            return lista.get(0);
+        } else {
+            return null;
+        }
+    } catch (Exception e) {
+        session.getTransaction().rollback();
+        return null;
+    }
+}
 
     public static void main(String[] args) {
         Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();

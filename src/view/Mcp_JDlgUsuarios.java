@@ -48,7 +48,7 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
         McpUsuarios mcpusuarios = new McpUsuarios();
         int codigo = mcp_util.strToInt(jTxtCodigo.getText());
         mcpusuarios.setMcpIdUsuario(codigo);
-        //mcpusuarios.setIdmcpusuarios(Util.strToInt( jTxtCodigo.getText() ));
+        //mcpusuarios.setIdmcpusuarios(mcp_util.strToInt( jTxtCodigo.getText() ));
 
         mcpusuarios.setMcpNome(jTxtNome.getText());
         mcpusuarios.setMcpApelido(jTxtApelido.getText());

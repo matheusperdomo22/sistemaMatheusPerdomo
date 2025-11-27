@@ -331,15 +331,29 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
-         mcp_util.habilitar(true, jTxtCodigo, jFmtData, jCboClientes, 
-        jCboCupons, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
-        jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd);
-    mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-    mcp_util.limpar(jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
+         mcp_util.habilitar(true, 
+        jTxtCodigo, jFmtData, jCboClientes, jCboCupons, 
+        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+        jBtnConfirmar, jBtnCancelar, 
+        jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
+    );
     
-    jFmtData.setEnabled(true);
     
+    mcp_util.habilitar(false, 
+        jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar
+    );
+    
+
+    mcp_util.limpar(
+        jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal
+    );
+    
+  
+    
+ 
     jFmtData.setText(mcp_util.dateToStr(new Date()));
+    jFmtData.requestFocusInWindow();
+    
     controllerVendProd.setList(new ArrayList());
     incluir = true;
 
@@ -405,10 +419,23 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
-        mcp_util.habilitar(false,  jTxtCodigo,
-             jBtnConfirmar, jBtnCancelar);
-        mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-        mcp_util.limpar(jTxtCodigo);
+        mcp_util.habilitar(false, 
+        jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
+        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+        jBtnConfirmar, jBtnCancelar,
+        jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
+    );
+    
+
+    mcp_util.habilitar(true, 
+        jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar
+    );
+
+    mcp_util.limpar(
+        jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal
+    );
+    
+    controllerVendProd.setList(new ArrayList());
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnIncluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirProdActionPerformed
