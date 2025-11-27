@@ -30,7 +30,7 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
         jTxtCodigo.setText(mcp_util.intToStr(mcpprodutos.getMcpIdProdutos()));
         jTxtNome.setText(mcpprodutos.getMcpNome());
         jTxtMarca.setText(mcpprodutos.getMcpMarca());
-        jTxtPreco.setText(mcpprodutos.getMcpPreco());
+        jTxtPreco.setText(mcp_util.doubleToStr(mcpprodutos.getMcpPreco()));
         jTxtCategoria.setText(mcpprodutos.getMcpCategoria());
         jTxtTamanho.setText(mcpprodutos.getMcpTamanho());
         jTxtLancamento.setText(mcpprodutos.getMcpLancamento());
@@ -43,7 +43,7 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
         mcpprodutos.setMcpIdProdutos(codigo);
         mcpprodutos.setMcpNome(jTxtNome.getText());
         mcpprodutos.setMcpMarca(jTxtMarca.getText());
-        mcpprodutos.setMcpPreco(jTxtPreco.getText());
+        mcpprodutos.setMcpPreco(mcp_util.strToDouble(jTxtPreco.getText()));
         mcpprodutos.setMcpCategoria(jTxtCategoria.getText());
         mcpprodutos.setMcpTamanho(jTxtTamanho.getText());
         mcpprodutos.setMcpLancamento(jTxtLancamento.getText());

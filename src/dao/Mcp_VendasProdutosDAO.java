@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
+import bean.McpVendas;
 import bean.McpVendasProdutos;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-
-
-/**
- *
- * @author u1845853
- */
-public class Mcp_VendasProdutosDAO extends AbstractDAO{
+public class Mcp_VendasProdutosDAO extends AbstractDAO {
 
     @Override
     public void insert(Object object) {
@@ -47,7 +37,16 @@ public class Mcp_VendasProdutosDAO extends AbstractDAO{
     public Object list(int codigo) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendasProdutos.class);
-        criteria.add(Restrictions.eq("idvendasproduto", codigo));
+        criteria.add(Restrictions.eq("mcpIdVendaProduto", codigo));
+        List lista = criteria.list();
+        session.getTransaction().commit();        
+        return lista;
+    }
+
+    public Object listProdutos(McpVendas venda) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpVendasProdutos.class);
+        criteria.add(Restrictions.eq("mcpVendas", venda));
         List lista = criteria.list();
         session.getTransaction().commit();        
         return lista;
@@ -60,10 +59,5 @@ public class Mcp_VendasProdutosDAO extends AbstractDAO{
         List lista = criteria.list();
         session.getTransaction().commit();        
         return lista;    
-    }
-
-    public static void main(String[] args) {
-        Mcp_VendasProdutosDAO vendasprodutosDAO = new Mcp_VendasProdutosDAO();
-        vendasprodutosDAO.listAll();
     }
 }

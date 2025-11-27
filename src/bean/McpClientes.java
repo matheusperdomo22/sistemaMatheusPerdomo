@@ -23,7 +23,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="mcp_clientes"
-    ,catalog="db_matheus_perdomo"
+    ,catalog="vendas"
     , uniqueConstraints = @UniqueConstraint(columnNames="mcp_cpf") 
 )
 public class McpClientes  implements java.io.Serializable {

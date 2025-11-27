@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 
 import bean.McpVendas;
@@ -14,6 +10,7 @@ public class Mcp_ControllerVendas extends AbstractTableModel {
 
     public void setList(List lstVendas) {
         this.lstVendas = lstVendas;
+        this.fireTableDataChanged();
     }
     
     public McpVendas getBean(int rowIndex) {
@@ -22,8 +19,7 @@ public class Mcp_ControllerVendas extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return lstVendas.size();
-                
+        return lstVendas.size();                
     }
 
     @Override
@@ -33,29 +29,29 @@ public class Mcp_ControllerVendas extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        McpVendas mcpvendas = (McpVendas) lstVendas.get( rowIndex);
-        if ( columnIndex == 0 ){
-            return mcpvendas.getMcpIdVenda();
-        } else if (columnIndex ==1) {
-            return mcpvendas.getMcpCupons();        
-        } else if (columnIndex ==2) {
-            return mcpvendas.getMcpObservacoes();
-        } else if (columnIndex ==3) {
-            return mcpvendas.getMcpTotal();
+        McpVendas vendas = (McpVendas) lstVendas.get(rowIndex);
+        if (columnIndex == 0) {
+            return vendas.getMcpIdVenda();
+        } else if (columnIndex == 1) {
+            return vendas.getMcpDataVenda();        
+        } else if (columnIndex == 2) {
+            return vendas.getMcpTotal();
+        } else if (columnIndex == 3) {
+            return vendas.getMcpClientes().getMcpNome();
         }
-        return "";
+        return ""; 
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        if ( columnIndex == 0) {
-            return "Código da venda";
-        } else if ( columnIndex == 1) {
-            return "Cupons";         
-        } else if ( columnIndex == 2) {
-            return "Observações";
-        } else if ( columnIndex == 3) {
+        if (columnIndex == 0) {
+            return "Código";
+        } else if (columnIndex == 1) {
+            return "Data";         
+        } else if (columnIndex == 2) {
             return "Total";
+        } else if (columnIndex == 3) {
+            return "Cliente";
         } 
         return "";
     }
