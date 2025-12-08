@@ -32,6 +32,17 @@ public class Mcp_VendasProdutosDAO extends AbstractDAO {
         session.delete(object);
         session.getTransaction().commit();        
     }
+    public void deleteProdutos(McpVendas vendas) {
+        List lista = (List) listProdutos(vendas); 
+        session.beginTransaction();
+        for (int i = 0; i < lista.size(); i++) {
+            McpVendasProdutos vendasProdutos = (McpVendasProdutos) lista.get(i);
+            session.flush();
+            session.clear();
+            session.delete(vendasProdutos);
+        }
+        session.getTransaction().commit();
+    }
 
     @Override
     public Object list(int codigo) {
@@ -42,7 +53,7 @@ public class Mcp_VendasProdutosDAO extends AbstractDAO {
         session.getTransaction().commit();        
         return lista;
     }
-
+    
     public Object listProdutos(McpVendas venda) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendasProdutos.class);

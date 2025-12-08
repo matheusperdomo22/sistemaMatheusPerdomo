@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="mcp_vendas_produtos", catalog="vendas")
+@Table(name="mcp_vendas_produtos", catalog="db_matheus_perdomo")
 public class McpVendasProdutos implements java.io.Serializable {
 
     private Integer mcpIdVendaProduto;

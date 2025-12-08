@@ -136,6 +136,9 @@ public class McpProdutos  implements java.io.Serializable {
     public void setMcpLancamento(String mcpLancamento) {
         this.mcpLancamento = mcpLancamento;
     }
+    public String toString() {
+        return this.mcpIdProdutos + " - " + this.mcpNome;
+    }
 
 }
 

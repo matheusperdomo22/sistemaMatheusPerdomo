@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="mcp_vendas", catalog="vendas")
+@Table(name="mcp_vendas", catalog="db_matheus_perdomo")
 public class McpVendas implements java.io.Serializable {
 
     private Integer mcpIdVenda;

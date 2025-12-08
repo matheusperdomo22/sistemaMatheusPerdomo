@@ -4,10 +4,12 @@ import bean.McpVendasProdutos;
 import bean.McpProdutos;
 import dao.Mcp_ProdutosDAO;
 import java.util.List;
+import javax.swing.JTable;
 import tools.mcp_util;
 
 public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
-    Mcp_JDlgVendas jDlgVendas;
+    Mcp_JDlgVendas Mcp_JDlgVendas;
+    boolean incluir;
     
     public Mcp_JDlgVendasProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,8 +26,15 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
         mcp_util.habilitar(false, jTxtValorUni, jTxtTotal);
     }
     
-    public void setTelaAnterior(Mcp_JDlgVendas jDlgVendas) {
-        this.jDlgVendas = jDlgVendas;
+    public void setTelaAnterior(Mcp_JDlgVendas Mcp_JDlgVendas, McpVendasProdutos vendasProdutos) {
+        this.Mcp_JDlgVendas = Mcp_JDlgVendas;
+        if (vendasProdutos != null) {
+            incluir = false;
+            jCboProdutos.setSelectedItem(vendasProdutos.getMcpProdutos());
+            jTxtQuantidade.setText(mcp_util.intToStr(vendasProdutos.getMcpQuantidade()));        
+        } else {
+            incluir = true;
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,8 +148,13 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
     vendasProdutos.setMcpProdutos((McpProdutos) jCboProdutos.getSelectedItem());
     vendasProdutos.setMcpQuantidade(mcp_util.strToInt(jTxtQuantidade.getText()));
     vendasProdutos.setMcpValorUnitario(mcp_util.strToDouble(jTxtValorUni.getText()));                
-    jDlgVendas.controllerVendProd.addBean(vendasProdutos);
-    setVisible(false);
+    //if (incluir == true) {
+          // Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
+        //} else {
+            //Mcp_JDlgVendas.controllerVendProd.removeBean(Mcp_JDlgVendas.getjTable1().getSelectedRow());
+          //  Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
+        //}
+        setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
