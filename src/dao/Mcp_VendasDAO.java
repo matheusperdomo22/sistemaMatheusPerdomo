@@ -42,6 +42,35 @@ public class Mcp_VendasDAO extends AbstractDAO {
         return lista;
     }
 
+    public Object listForm(String forma) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpVendas.class);
+        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + forma + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listTotal(String total) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpVendas.class);
+        criteria.add(Restrictions.like("mcpTotal", "%" + total + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+
+    public Object listFormTotal(String forma, String total) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpVendas.class);
+        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + forma + "%"));
+        criteria.add(Restrictions.like("mcpTotal", "%" + total + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
     @Override
     public Object listAll() {
         session.beginTransaction();
