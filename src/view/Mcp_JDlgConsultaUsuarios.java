@@ -5,7 +5,7 @@
 package view;
 
 import bean.McpUsuarios;
-import dao.Mcp_ProdutosDAO;
+import dao.Mcp_UsuariosDAO;
 import dao.Mcp_UsuariosDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,23 +16,23 @@ import view.Mcp_JDlgUsuarios;
  *
  * @author Marcos
  */
-public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
-   Mcp_ControllerConsultasProdutos controllerConsultasProdutos;
+public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
+   Mcp_ControllerConsultasUsuarios controllerConsultasUsuarios;
     /**
      * Creates new form JDlgUsuariosPesquisar
      */
  
-    public Mcp_JDlgConsultaProdutos(java.awt.Frame parent, boolean modal) {
+    public Mcp_JDlgConsultaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Produtos");
+        setTitle("Pesquisar Usuarios");
    
-        controllerConsultasProdutos = new Mcp_ControllerConsultasProdutos();
-        Mcp_ProdutosDAO produtosDAO = new Mcp_ProdutosDAO();
+        controllerConsultasUsuarios = new Mcp_ControllerConsultasUsuarios();
+        Mcp_UsuariosDAO produtosDAO = new Mcp_UsuariosDAO();
         List lista = new ArrayList();
-        controllerConsultasProdutos.setList(lista);
-        jTable1.setModel(controllerConsultasProdutos);
+        controllerConsultasUsuarios.setList(lista);
+        jTable1.setModel(controllerConsultasUsuarios);
         
     //    controllerUsuarios = new ControllerUsuarios();
     //    UsuariosDAO usuariosDAO = new UsuariosDAO();
@@ -56,7 +56,7 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
         jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
-        jTxtValor = new javax.swing.JTextField();
+        jTxtCpf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
 
@@ -89,7 +89,7 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("Valor Maior que ");
+        jLabel2.setText("CPF Maior que ");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +117,7 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBtnConsultar)))))
                 .addContainerGap())
@@ -135,7 +135,7 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnConsultar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,26 +160,26 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
 
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
         // TODO add your handling code here:
-        Mcp_ProdutosDAO produtosDAO = new Mcp_ProdutosDAO();
+        Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();
         List lista;
-        if ((jTxtNome.getText().isEmpty() == false) && (jTxtValor.getText().isEmpty() == false)) {
-            lista = (List) produtosDAO.listNomeValor(jTxtNome.getText(), mcp_util.strToDouble(jTxtValor.getText()));
-        } else if (jTxtNome.getText().isEmpty() == false) {
-            lista = (List) produtosDAO.listNome(jTxtNome.getText());
-        } else if (jTxtValor.getText().isEmpty() == false) {
-            lista = (List) produtosDAO.listValor(mcp_util.strToDouble(jTxtValor.getText()));
+        if (!jTxtNome.getText().isEmpty() && !jTxtCpf.getText().isEmpty()) {
+            lista = (List) usuariosDAO.listNomeValor(jTxtNome.getText(), jTxtCpf.getText());
+        } else if (!jTxtNome.getText().isEmpty()) {
+            lista = (List) usuariosDAO.listNome(jTxtNome.getText());
+        } else if (!jTxtCpf.getText().isEmpty()) {
+            lista = (List) usuariosDAO.listCpf(jTxtCpf.getText());
         } else {
-            lista = (List) produtosDAO.listAll();
+            lista = (List) usuariosDAO.listAll();
         }
-        controllerConsultasProdutos.setList(lista);
+        controllerConsultasUsuarios.setList(lista);
         if (lista.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Nenhum usuário encontrado com os critérios informados.",
-                    "Consulta",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-        }
+        javax.swing.JOptionPane.showMessageDialog(
+            this, 
+            "Nenhum usuário encontrado com os critérios informados.", 
+            "Consulta", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE
+        );
+    }
     }//GEN-LAST:event_jBtnConsultarActionPerformed
 
     /**
@@ -199,14 +199,22 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgConsultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -219,7 +227,7 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Mcp_JDlgConsultaProdutos dialog = new Mcp_JDlgConsultaProdutos(new javax.swing.JFrame(), true);
+                Mcp_JDlgConsultaUsuarios dialog = new Mcp_JDlgConsultaUsuarios(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -238,7 +246,7 @@ public class Mcp_JDlgConsultaProdutos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTxtCpf;
     private javax.swing.JTextField jTxtNome;
-    private javax.swing.JTextField jTxtValor;
     // End of variables declaration//GEN-END:variables
 }

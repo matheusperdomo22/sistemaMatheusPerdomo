@@ -215,6 +215,7 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
 
     private void jMnuConsultasUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasUsuariosActionPerformed
         // TODO add your handling code here:
+        new view.Mcp_JDlgConsultaUsuarios(this, true).setVisible(true);
     }//GEN-LAST:event_jMnuConsultasUsuariosActionPerformed
 
     private void jMnuConsultasClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasClientesActionPerformed
