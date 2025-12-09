@@ -148,12 +148,12 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
     vendasProdutos.setMcpProdutos((McpProdutos) jCboProdutos.getSelectedItem());
     vendasProdutos.setMcpQuantidade(mcp_util.strToInt(jTxtQuantidade.getText()));
     vendasProdutos.setMcpValorUnitario(mcp_util.strToDouble(jTxtValorUni.getText()));                
-    //if (incluir == true) {
-          // Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
-        //} else {
-            //Mcp_JDlgVendas.controllerVendProd.removeBean(Mcp_JDlgVendas.getjTable1().getSelectedRow());
-          //  Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
-        //}
+    if (incluir == true) {
+          Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
+        } else {
+            Mcp_JDlgVendas.controllerVendProd.removeBean(Mcp_JDlgVendas.getjTable1().getSelectedRow());
+            Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
+        }
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

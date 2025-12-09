@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import tools.mcp_util;
 
 public class Mcp_JDlgVendas extends javax.swing.JDialog {
@@ -58,6 +59,9 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
         controllerVendProd.setList(new ArrayList());
         jTable1.setModel(controllerVendProd);
     }
+     public JTable getjTable1() {
+        return jTable1;
+    }  
 
     public McpVendas viewBean() {
         McpVendas vendas = new McpVendas();
