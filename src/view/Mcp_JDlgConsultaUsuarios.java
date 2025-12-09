@@ -89,7 +89,7 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("CPF Maior que ");
+        jLabel2.setText("CPF ");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {

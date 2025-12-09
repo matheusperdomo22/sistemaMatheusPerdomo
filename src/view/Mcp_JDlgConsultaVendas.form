@@ -123,7 +123,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Total Maior que "/>
+        <Property name="text" type="java.lang.String" value="Total"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jBtnConsultar">

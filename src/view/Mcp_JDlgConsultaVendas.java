@@ -89,7 +89,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
 
         jLabel1.setText("Forma de Pagamento");
 
-        jLabel2.setText("Total Maior que ");
+        jLabel2.setText("Total");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
