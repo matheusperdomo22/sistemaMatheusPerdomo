@@ -343,7 +343,7 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     );
     
     mcp_util.habilitar(false,jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-    mcp_util.limpar(jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
+    mcp_util.limpar(jTxtCodigo, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
     jFmtData.setText(mcp_util.dateToStr(new Date()));
     controllerVendProd.setList(new ArrayList());
     incluir = true;
