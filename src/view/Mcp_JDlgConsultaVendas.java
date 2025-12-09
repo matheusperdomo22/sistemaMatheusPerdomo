@@ -164,9 +164,9 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
     List lista;
 
     if (!jTxtFormadePagamento.getText().isEmpty() && !jTxtTotal.getText().isEmpty()) {
-        lista = (List) vendasDAO.listFormTotal(jTxtFormadePagamento.getText(), jTxtTotal.getText());
+        lista = (List) vendasDAO.listFormaTotal(jTxtFormadePagamento.getText(), jTxtTotal.getText());
     } else if (!jTxtFormadePagamento.getText().isEmpty()) {
-        lista = (List) vendasDAO.listForm(jTxtFormadePagamento.getText());
+        lista = (List) vendasDAO.listFormaPagamento(jTxtFormadePagamento.getText());
     } else if (!jTxtTotal.getText().isEmpty()) {
         lista = (List) vendasDAO.listTotal(jTxtTotal.getText());
     } else {

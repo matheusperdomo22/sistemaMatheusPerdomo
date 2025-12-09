@@ -1,6 +1,7 @@
 package dao;
 
 import bean.McpVendas;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -11,7 +12,7 @@ public class Mcp_VendasDAO extends AbstractDAO {
     public void insert(Object object) {
         session.beginTransaction();
         session.save(object);
-        session.getTransaction().commit();        
+        session.getTransaction().commit();
     }
 
     @Override
@@ -20,16 +21,16 @@ public class Mcp_VendasDAO extends AbstractDAO {
         session.flush();
         session.clear();
         session.update(object);
-        session.getTransaction().commit();        
+        session.getTransaction().commit();
     }
 
     @Override
     public void delete(Object object) {
         session.beginTransaction();
         session.flush();
-        session.clear();        
+        session.clear();
         session.delete(object);
-        session.getTransaction().commit();        
+        session.getTransaction().commit();
     }
 
     @Override
@@ -38,34 +39,47 @@ public class Mcp_VendasDAO extends AbstractDAO {
         Criteria criteria = session.createCriteria(McpVendas.class);
         criteria.add(Restrictions.eq("mcpIdVenda", codigo));
         List lista = criteria.list();
-        session.getTransaction().commit();        
+        session.getTransaction().commit();
         return lista;
     }
 
-    public Object listForm(String forma) {
+    public Object listFormaPagamento(String formaPagamento) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
-        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + forma + "%"));
+        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + formaPagamento + "%"));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;
     }
 
-    public Object listTotal(String total) {
+    public Object listTotal(String totalStr) {
+        double total;
+        try {
+            total = Double.parseDouble(totalStr);
+        } catch (NumberFormatException e) {
+            return new ArrayList(); 
+        }
+
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
-        criteria.add(Restrictions.like("mcpTotal", "%" + total + "%"));
+        criteria.add(Restrictions.eq("mcpTotal", total)); 
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;
     }
 
+    public Object listFormaTotal(String formaPagamento, String totalStr) {
+        double total;
+        try {
+            total = Double.parseDouble(totalStr);
+        } catch (NumberFormatException e) {
+            return new ArrayList(); 
+        }
 
-    public Object listFormTotal(String forma, String total) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
-        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + forma + "%"));
-        criteria.add(Restrictions.like("mcpTotal", "%" + total + "%"));
+        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + formaPagamento + "%"));
+        criteria.add(Restrictions.eq("mcpTotal", total));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;
@@ -76,7 +90,7 @@ public class Mcp_VendasDAO extends AbstractDAO {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
         List lista = criteria.list();
-        session.getTransaction().commit();        
-        return lista;    
+        session.getTransaction().commit();
+        return lista;
     }
 }
