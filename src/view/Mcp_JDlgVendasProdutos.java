@@ -42,8 +42,8 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
 
         jTxtTotal = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jBtnOK = new javax.swing.JButton();
+        jBtnCANCELAR = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jCboProdutos = new javax.swing.JComboBox<McpProdutos>();
         jLabel2 = new javax.swing.JLabel();
@@ -55,19 +55,19 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
 
         jLabel4.setText("Total");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-ok-24.png"))); // NOI18N
-        jButton1.setText("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtnOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-ok-24.png"))); // NOI18N
+        jBtnOK.setText("OK");
+        jBtnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnOKActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-cancelar-24.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBtnCANCELAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-cancelar-24.png"))); // NOI18N
+        jBtnCANCELAR.setText("Cancelar");
+        jBtnCANCELAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBtnCANCELARActionPerformed(evt);
             }
         });
 
@@ -86,6 +86,11 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
                 jTxtQuantidadeActionPerformed(evt);
             }
         });
+        jTxtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtQuantidadeKeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Valor Unitário");
 
@@ -102,10 +107,10 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(jTxtQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jBtnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(jBtnCANCELAR)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTxtValorUni, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,15 +140,15 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
                     .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(jBtnCANCELAR)
+                    .addComponent(jBtnOK))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOKActionPerformed
         McpVendasProdutos vendasProdutos = new McpVendasProdutos();
     vendasProdutos.setMcpProdutos((McpProdutos) jCboProdutos.getSelectedItem());
     vendasProdutos.setMcpQuantidade(mcp_util.strToInt(jTxtQuantidade.getText()));
@@ -155,12 +160,12 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
             Mcp_JDlgVendas.controllerVendProd.addBean(vendasProdutos);
         }
         setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBtnOKActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jBtnCANCELARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCANCELARActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jBtnCANCELARActionPerformed
 
     private void jCboProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProdutosActionPerformed
         // TODO add your handling code here:
@@ -172,6 +177,17 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
 
     private void jTxtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtQuantidadeActionPerformed
         // TODO add your handling code here:
+        //if(jTxtQuantidade.getText().isEmpty() == false){
+       // McpProdutos produtos = (McpProdutos) jCboProdutos.getSelectedItem();
+       // int quant = mcp_util.strToInt(jTxtQuantidade.getText());
+       // jTxtTotal.setText(mcp_util.doubleToStr(quant * produtos.getMcpPreco()));
+    //} else {
+    //    mcp_util.limpar(jTxtTotal);
+    //}
+    }//GEN-LAST:event_jTxtQuantidadeActionPerformed
+
+    private void jTxtQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtQuantidadeKeyReleased
+        // TODO add your handling code here:
         if(jTxtQuantidade.getText().isEmpty() == false){
         McpProdutos produtos = (McpProdutos) jCboProdutos.getSelectedItem();
         int quant = mcp_util.strToInt(jTxtQuantidade.getText());
@@ -179,7 +195,7 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
     } else {
         mcp_util.limpar(jTxtTotal);
     }
-    }//GEN-LAST:event_jTxtQuantidadeActionPerformed
+    }//GEN-LAST:event_jTxtQuantidadeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -224,8 +240,8 @@ public class Mcp_JDlgVendasProdutos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jBtnCANCELAR;
+    private javax.swing.JButton jBtnOK;
     private javax.swing.JComboBox<McpProdutos> jCboProdutos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
