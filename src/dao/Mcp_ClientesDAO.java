@@ -52,6 +52,33 @@ public class Mcp_ClientesDAO extends AbstractDAO{
         session.getTransaction().commit();        
         return lista;
     }
+     public Object listNome(String nome) {
+    session.beginTransaction();
+    Criteria criteria = session.createCriteria(McpClientes.class);
+    criteria.add(Restrictions.like("mcpNome", "%" + nome + "%")); 
+    List lista = criteria.list();
+    session.getTransaction().commit();
+    return lista;
+}
+
+public Object listCid(String cid) {
+    session.beginTransaction();
+    Criteria criteria = session.createCriteria(McpClientes.class);
+    criteria.add(Restrictions.like("mcpCidade", "%" + cid + "%")); 
+    List lista = criteria.list();
+    session.getTransaction().commit();
+    return lista;
+}
+
+public Object listNomeValor(String nome, String cid) {
+    session.beginTransaction();
+    Criteria criteria = session.createCriteria(McpClientes.class);
+    criteria.add(Restrictions.like("mcpNome", "%" + nome + "%"));
+    criteria.add(Restrictions.like("mcpCidade", "%" + cid + "%"));
+    List lista = criteria.list();
+    session.getTransaction().commit();
+    return lista;
+}
 
     @Override
     public Object listAll() {
