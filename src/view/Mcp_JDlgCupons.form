@@ -83,9 +83,9 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jTxtCodigo" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jFmtDataValidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jFmtDataValidade" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -93,9 +93,9 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jTxtNomeCupom" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTxtDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTxtDescricao" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>

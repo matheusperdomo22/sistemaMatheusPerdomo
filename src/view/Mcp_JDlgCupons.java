@@ -7,7 +7,12 @@ package view;
 
 import bean.McpCupons;
 import dao.Mcp_CuponsDAO;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.mcp_util;
 
 /**
@@ -16,6 +21,7 @@ import tools.mcp_util;
  */
 public class Mcp_JDlgCupons extends javax.swing.JDialog {
         private boolean incluir;
+         private MaskFormatter  mascaraDataValidade;
     /**
      * Creates new form Mcp_Cupons
      */
@@ -24,6 +30,14 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
         initComponents();
         setTitle("Cadastro de Cupons");
         setLocationRelativeTo(null);
+         try{
+            mascaraDataValidade = new MaskFormatter("##/##/####");
+            jFmtDataValidade.setFormatterFactory(new DefaultFormatterFactory(mascaraDataValidade));
+            
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(Mcp_JDlgClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mcp_util.habilitar(false, jTxtCodigo, jTxtDescricao, jTxtUltilizacoes, jTxtTipodesconto, jFmtDataValidade, jTxtNomeCupom, jChbAtivo, jBtnConfirmar, jBtnCancelar);
     }
 
@@ -208,7 +222,7 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFmtDataValidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -216,7 +230,7 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTxtNomeCupom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -322,6 +336,7 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
         mcp_util.limpar(jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
                 jFmtDataValidade, jTxtUltilizacoes, jChbAtivo);
         incluir = true;
+        jTxtCodigo.grabFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnIncluir2ActionPerformed
 

@@ -48,12 +48,12 @@
                                   <Component id="jLabel1" min="-2" pref="43" max="-2" attributes="0"/>
                                   <Component id="jTxtCodigo" min="-2" pref="69" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFmtData" min="-2" pref="82" max="-2" attributes="0"/>
+                                  <Component id="jFmtData" min="-2" pref="87" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jCboCupons" max="32767" attributes="0"/>
@@ -109,11 +109,11 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jTxtCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jFmtData" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jCboClientes" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtFormadePagamento" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtObservacoes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jFmtData" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -216,16 +216,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Data"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jFmtData">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="##/##/####" subtype="-1" type="5"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFmtDataActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -337,6 +327,11 @@
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;McpClientes&gt;()"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;McpClientes&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="jFmtData">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFmtDataActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

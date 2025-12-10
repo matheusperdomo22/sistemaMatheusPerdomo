@@ -8,41 +8,47 @@ import dao.Mcp_ClientesDAO;
 import dao.Mcp_CuponsDAO;
 import dao.Mcp_VendasDAO;
 import dao.Mcp_VendasProdutosDAO;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.mcp_util;
 
 public class Mcp_JDlgVendas extends javax.swing.JDialog {
 
     Mcp_ControllerVendasProdutos controllerVendProd;
     boolean incluir;
+    private MaskFormatter mascaraData;
 
     public Mcp_JDlgVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Vendas");
-       
-        mcp_util.habilitar(false, 
-        jTxtCodigo, jFmtData, jCboClientes, jCboCupons, 
-        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
-        jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
-    );
-    mcp_util.habilitar(true,
-        jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar
-    );
-        
+
         try {
-        javax.swing.text.MaskFormatter mask = new javax.swing.text.MaskFormatter("##/##/####");
-        mask.setPlaceholderCharacter('_');
-        jFmtData = new javax.swing.JFormattedTextField(mask);
-    } catch (java.text.ParseException ex) {
-        ex.printStackTrace();
-    }
-        
+            mascaraData = new MaskFormatter("##/##/####");
+            jFmtData.setFormatterFactory(new DefaultFormatterFactory(mascaraData));
+        } catch (ParseException ex) {
+            Logger.getLogger(Mcp_JDlgClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        mcp_util.habilitar(false,
+                jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
+                jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+                jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
+        );
+
+        mcp_util.habilitar(true,
+                jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar
+        );
+
         Mcp_ClientesDAO clientesDAO = new Mcp_ClientesDAO();
         List lista = (List) clientesDAO.listAll();
         for (int i = 0; i < lista.size(); i++) {
@@ -54,14 +60,15 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
         for (Object object : listaCupons) {
             jCboCupons.addItem((McpCupons) object);
         }
-        
+
         controllerVendProd = new Mcp_ControllerVendasProdutos();
         controllerVendProd.setList(new ArrayList());
         jTable1.setModel(controllerVendProd);
     }
-     public JTable getjTable1() {
+
+    public JTable getjTable1() {
         return jTable1;
-    }  
+    }
 
     public McpVendas viewBean() {
         McpVendas vendas = new McpVendas();
@@ -83,13 +90,12 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
         jTxtObservacoes.setText(vendas.getMcpObservacoes());
         jCboClientes.setSelectedItem(vendas.getMcpClientes());
         jCboCupons.setSelectedItem(vendas.getMcpCupons());
-        
+
         Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
         List lista = (List) vendasProdutosDAO.listProdutos(vendas);
         controllerVendProd.setList(lista);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,7 +107,6 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
         jBtnPesquisar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jFmtData = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jBtnIncluirProd = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -119,6 +124,7 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jCboCupons = new javax.swing.JComboBox<McpCupons>();
         jCboClientes = new javax.swing.JComboBox<McpClientes>();
+        jFmtData = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -172,17 +178,6 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
 
         jLabel2.setText("Data");
 
-        try {
-            jFmtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFmtData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFmtDataActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Clientes");
 
         jBtnIncluirProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-adicionar-24.png"))); // NOI18N
@@ -229,6 +224,12 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
 
         jLabel7.setText("Codigo do Cupom");
 
+        jFmtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFmtDataActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -256,11 +257,11 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(15, 15, 15)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addComponent(jFmtData, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(8, 8, 8))
+                                    .addComponent(jFmtData, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(29, 29, 29))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jCboCupons, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)))
@@ -302,11 +303,11 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFmtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtFormadePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFmtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -335,84 +336,85 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
-         mcp_util.habilitar(true, 
-        jTxtCodigo, jFmtData, jCboClientes, jCboCupons, 
-        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
-        jBtnConfirmar, jBtnCancelar, 
-        jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
-    );
-    
-    mcp_util.habilitar(false,jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-    mcp_util.limpar(jTxtCodigo, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
-    jFmtData.setText(mcp_util.dateToStr(new Date()));
-    controllerVendProd.setList(new ArrayList());
-    incluir = true;
+        mcp_util.habilitar(true,
+                jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
+                jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+                jBtnConfirmar, jBtnCancelar,
+                jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
+        );
+
+        mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.limpar(jTxtCodigo, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
+        jFmtData.setText(mcp_util.dateToStr(new Date()));
+        controllerVendProd.setList(new ArrayList());
+        incluir = true;
+        jTxtCodigo.grabFocus();
 
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
-       mcp_util.habilitar(true, jFmtData, jCboClientes, jCboCupons, 
-        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
-        jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd);
-    mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-    incluir = false;
+        mcp_util.habilitar(true, jFmtData, jCboClientes, jCboCupons,
+                jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+                jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd);
+        mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        incluir = false;
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if (mcp_util.pergunta("Deseja excluir esta venda?")==true) {
-        Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();       
-        Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
-        
-        for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
-            McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
-            vendasProdutosDAO.delete(vendasProdutos);
+        if (mcp_util.pergunta("Deseja excluir esta venda?") == true) {
+            Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
+            Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
+
+            for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+                McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
+                vendasProdutosDAO.delete(vendasProdutos);
+            }
+
+            vendasDAO.delete(viewBean());
         }
-        
-        vendasDAO.delete(viewBean()); 
-    }
-         mcp_util.limpar(jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
+        mcp_util.limpar(jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
         controllerVendProd.setList(new ArrayList());
         JOptionPane.showMessageDialog(this, "Venda excluída com sucesso!");
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-    Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
-    Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
-    McpVendas vendas = viewBean();
+        Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
+        Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
+        McpVendas vendas = viewBean();
 
-    if (incluir == true) {
-        vendasDAO.insert(vendas);
+        if (incluir == true) {
+            vendasDAO.insert(vendas);
 
-        for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
-            McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
-            vendasProdutos.setMcpVendas(vendas);
-            vendasProdutosDAO.insert(vendasProdutos);
+            for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+                McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
+                vendasProdutos.setMcpVendas(vendas);
+                vendasProdutosDAO.insert(vendasProdutos);
+            }
+
+        } else {
+            vendasDAO.update(vendas);
+
+            vendasProdutosDAO.deleteProdutos(vendas);
+
+            for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+                McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
+                vendasProdutos.setMcpVendas(vendas);
+                vendasProdutosDAO.insert(vendasProdutos);
+            }
         }
 
-    } else {
-        vendasDAO.update(vendas);
+        mcp_util.habilitar(false, jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
+                jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+                jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd);
 
-        vendasProdutosDAO.deleteProdutos(vendas);
+        mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
 
-        for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
-            McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
-            vendasProdutos.setMcpVendas(vendas);
-            vendasProdutosDAO.insert(vendasProdutos);
-        }
-    }
+        mcp_util.limpar(jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
+                jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
 
-    mcp_util.habilitar(false, jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
-        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
-        jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd);
+        controllerVendProd.setList(new ArrayList<>());
 
-    mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-
-    mcp_util.limpar(jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
-                    jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
-
-    controllerVendProd.setList(new ArrayList<>());
-
-    JOptionPane.showMessageDialog(this, "Venda salva com sucesso!");
+        JOptionPane.showMessageDialog(this, "Venda salva com sucesso!");
 
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
@@ -424,29 +426,28 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
-        mcp_util.habilitar(false, 
-        jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
-        jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
-        jBtnConfirmar, jBtnCancelar,
-        jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
-    );
-    
+        mcp_util.habilitar(false,
+                jTxtCodigo, jFmtData, jCboClientes, jCboCupons,
+                jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
+                jBtnConfirmar, jBtnCancelar,
+                jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd
+        );
 
-    mcp_util.habilitar(true, 
-        jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar
-    );
+        mcp_util.habilitar(true,
+                jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar
+        );
 
-    mcp_util.limpar(
-        jTxtCodigo, jFmtData,jCboClientes, jCboCupons, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal
-    );
-    
-    controllerVendProd.setList(new ArrayList());
+        mcp_util.limpar(
+                jTxtCodigo, jFmtData, jCboClientes, jCboCupons, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal
+        );
+
+        controllerVendProd.setList(new ArrayList());
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnIncluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirProdActionPerformed
         // TODO add your handling code here:
         Mcp_JDlgVendasProdutos jDlgVendasProdutos = new Mcp_JDlgVendasProdutos(null, true);
-        jDlgVendasProdutos.setTelaAnterior(this,null);
+        jDlgVendasProdutos.setTelaAnterior(this, null);
         jDlgVendasProdutos.setVisible(true);
     }//GEN-LAST:event_jBtnIncluirProdActionPerformed
 
@@ -461,12 +462,12 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     private void jBtnExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirProdActionPerformed
         // TODO add your handling code here:
         if (jTable1.getSelectedRow() == -1) {
-        mcp_util.mensagem("Selecione um produto para excluir.");
-    } else {
-        if (mcp_util.pergunta("Deseja excluir o produto?")==true) {
-            controllerVendProd.removeBean(jTable1.getSelectedRow());
+            mcp_util.mensagem("Selecione um produto para excluir.");
+        } else {
+            if (mcp_util.pergunta("Deseja excluir o produto?") == true) {
+                controllerVendProd.removeBean(jTable1.getSelectedRow());
+            }
         }
-    }
     }//GEN-LAST:event_jBtnExcluirProdActionPerformed
 
     private void jFmtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFmtDataActionPerformed

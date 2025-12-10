@@ -7,7 +7,12 @@ package view;
 
 import bean.McpClientes;
 import dao.Mcp_ClientesDAO;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import tools.mcp_util;
 
 /**
@@ -16,6 +21,7 @@ import tools.mcp_util;
  */
 public class Mcp_JDlgClientes extends javax.swing.JDialog {
         private boolean incluir;
+        private MaskFormatter mascaraCpf, mascaraDataNasc, mascaraDataCadastro, mascaraTelefone;
     /**
      * Creates new form Mcp_JDlgClientes
      */
@@ -24,6 +30,18 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Tela de Clientes");
+        try {
+            mascaraCpf = new MaskFormatter("###.###.###-##");
+            mascaraDataNasc = new MaskFormatter("##/##/####");
+            mascaraDataCadastro = new MaskFormatter("##/##/####");
+            mascaraTelefone = new MaskFormatter("(##)#####-####");
+            jFmtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
+            jFmtTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone));
+            jFmtDataNascimento.setFormatterFactory(new DefaultFormatterFactory(mascaraDataNasc));
+            jFmtDataCadastro.setFormatterFactory(new DefaultFormatterFactory(mascaraDataCadastro));
+        } catch (ParseException ex) {
+            Logger.getLogger(Mcp_JDlgClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
          mcp_util.habilitar(false, jBtnEnviarEmail, 
         jTxtCodigo, jTxtNome, jTxtSexo, jFmtCpf, jFmtDataNascimento,
         jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
@@ -442,7 +460,8 @@ public class Mcp_JDlgClientes extends javax.swing.JDialog {
             jFmtDataCadastro, jTxtCidade1, jTxtEstado, jTxtCep1, jTxtEndereco1,
             jTxtRendamensal, jFmtTelefone, jTxtEmail, jTxtObservacoes, jChbAtivo);
     
-    incluir = true;        // TODO add your handling code here:
+    incluir = true;      
+    jTxtCodigo.grabFocus();
 
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 

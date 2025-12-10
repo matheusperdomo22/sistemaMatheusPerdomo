@@ -4,18 +4,26 @@
  * and open the template in the editor.
  */
 package view;
+
 import bean.McpUsuarios;
 import dao.Mcp_UsuariosDAO;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tools.mcp_util;
 import javax.swing.JOptionPane;
-
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
  * @author Samsung
  */
 public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
-        private boolean incluir;
+
+    private boolean incluir;
+    private MaskFormatter mascaraCpf, mascaraDataNasc;
+
     /**
      * Creates new form Mcp_JDlgUsuarios
      */
@@ -24,9 +32,18 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
         initComponents();
         setTitle("Cadastro de Usuarios");
         setLocationRelativeTo(null);
-        mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
-        jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jBtnCancelar);
+        try {
+            mascaraCpf = new MaskFormatter("###.###.###-##");
+            mascaraDataNasc = new MaskFormatter("##/##/####");
+            jFmtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
+            jFmtDataNascimento.setFormatterFactory(new DefaultFormatterFactory(mascaraDataNasc));
+        } catch (ParseException ex) {
+            Logger.getLogger(Mcp_JDlgClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento, jFmtCpf, jTxtApelido,
+                jChbAtivo, jCboNivel, jPwdSenha, jBtnConfirmar, jBtnCancelar);
     }
+
     public void beanView(McpUsuarios mcpusuarios) {
         jTxtCodigo.setText(mcp_util.intToStr(mcpusuarios.getMcpIdUsuario()));
         jTxtNome.setText(mcpusuarios.getMcpNome());
@@ -63,7 +80,6 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
         }
         return mcpusuarios;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -323,35 +339,36 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jFmtDataNascimentoActionPerformed
 
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
-        mcp_util.habilitar(true, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
-        jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jBtnCancelar);
-         mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar); 
-         mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
+        mcp_util.habilitar(true, jTxtNome, jTxtCodigo, jFmtDataNascimento, jFmtCpf, jTxtApelido,
+                jChbAtivo, jCboNivel, jPwdSenha, jBtnConfirmar, jBtnCancelar);
+        mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
                 jPwdSenha, jCboNivel, jChbAtivo);
         incluir = true;
-        
+         jTxtCodigo.grabFocus();
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
-       mcp_util.habilitar(true, jTxtNome, jFmtDataNascimento,jFmtCpf,jTxtApelido,
-        jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jBtnCancelar);
-         mcp_util.habilitar(false,jTxtCodigo, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.habilitar(true, jTxtNome, jFmtDataNascimento, jFmtCpf, jTxtApelido,
+                jChbAtivo, jCboNivel, jPwdSenha, jBtnConfirmar, jBtnCancelar);
+        mcp_util.habilitar(false, jTxtCodigo, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if(mcp_util.pergunta("deseja excluir?")) {
-        JOptionPane.showMessageDialog(null, "Excluido");}
+        if (mcp_util.pergunta("deseja excluir?")) {
+            JOptionPane.showMessageDialog(null, "Excluido");
+        }
         Mcp_UsuariosDAO mcpusuariosDAO = new Mcp_UsuariosDAO();
-            mcpusuariosDAO.delete(viewBean());
-        
+        mcpusuariosDAO.delete(viewBean());
+
         mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
                 jPwdSenha, jCboNivel, jChbAtivo);
-   
+
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         // TODO add your handling code here:
-        
+
         Mcp_UsuariosDAO mcp_usuariosDAO = new Mcp_UsuariosDAO();
         McpUsuarios mcp_usuarios = viewBean();
         if (incluir == true) {
@@ -359,15 +376,15 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
         } else {
             mcp_usuariosDAO.update(mcp_usuarios);
         }
-        mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
-        jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jPwdSenha, jBtnCancelar);
-       
-         mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-         
-              mcp_util.limpar(  jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
-        jChbAtivo,jCboNivel);
+        mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento, jFmtCpf, jTxtApelido,
+                jChbAtivo, jCboNivel, jPwdSenha, jBtnConfirmar, jPwdSenha, jBtnCancelar);
+
+        mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+
+        mcp_util.limpar(jTxtNome, jTxtCodigo, jFmtDataNascimento, jFmtCpf, jTxtApelido,
+                jChbAtivo, jCboNivel);
         JOptionPane.showMessageDialog(this, "Usuario salvo com sucesso!");
-                      
+
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
@@ -378,10 +395,10 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
-        mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido,
-        jChbAtivo,jCboNivel,jPwdSenha, jBtnConfirmar,jPwdSenha, jBtnCancelar);
-         mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-              mcp_util.limpar(  jTxtNome, jTxtCodigo, jFmtDataNascimento,jFmtCpf,jTxtApelido, jChbAtivo,jCboNivel);
+        mcp_util.habilitar(false, jTxtNome, jTxtCodigo, jFmtDataNascimento, jFmtCpf, jTxtApelido,
+                jChbAtivo, jCboNivel, jPwdSenha, jBtnConfirmar, jPwdSenha, jBtnCancelar);
+        mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+        mcp_util.limpar(jTxtNome, jTxtCodigo, jFmtDataNascimento, jFmtCpf, jTxtApelido, jChbAtivo, jCboNivel);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jTxtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCodigoActionPerformed
