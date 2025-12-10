@@ -33,11 +33,11 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
         jBtnConsultarUsuarios = new javax.swing.JButton();
         jBtnConsultarClientes = new javax.swing.JButton();
         jBtnConsultarProdutos = new javax.swing.JButton();
         jBtnConsultarVendas = new javax.swing.JButton();
+        jBtnConsultarClientes1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMnuCadastros = new javax.swing.JMenu();
         jMnuUsuarios = new javax.swing.JMenuItem();
@@ -67,12 +67,7 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
-        jBtnConsultarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-consulta-30.png"))); // NOI18N
+        jBtnConsultarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-grupo-de-usuário-mulher-mulher-24.png"))); // NOI18N
         jBtnConsultarUsuarios.setFocusable(false);
         jBtnConsultarUsuarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnConsultarUsuarios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -83,7 +78,7 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
         });
         jToolBar1.add(jBtnConsultarUsuarios);
 
-        jBtnConsultarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-atrair-clientes-30.png"))); // NOI18N
+        jBtnConsultarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-clientes-30.png"))); // NOI18N
         jBtnConsultarClientes.setFocusable(false);
         jBtnConsultarClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnConsultarClientes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -94,7 +89,7 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
         });
         jToolBar1.add(jBtnConsultarClientes);
 
-        jBtnConsultarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-caixa-30.png"))); // NOI18N
+        jBtnConsultarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-produto-24.png"))); // NOI18N
         jBtnConsultarProdutos.setFocusable(false);
         jBtnConsultarProdutos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnConsultarProdutos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -115,6 +110,17 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jBtnConsultarVendas);
+
+        jBtnConsultarClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-atrair-clientes-30.png"))); // NOI18N
+        jBtnConsultarClientes1.setFocusable(false);
+        jBtnConsultarClientes1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnConsultarClientes1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBtnConsultarClientes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnConsultarClientes1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jBtnConsultarClientes1);
 
         jMnuCadastros.setMnemonic('c');
         jMnuCadastros.setText("Cadastros");
@@ -311,23 +317,28 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
 
     private void jBtnConsultarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarUsuariosActionPerformed
         // TODO add your handling code here:
-         new view.Mcp_JDlgConsultaUsuarios(this, true).setVisible(true);
+         new view.Mcp_JDlgUsuarios(this, true).setVisible(true);
     }//GEN-LAST:event_jBtnConsultarUsuariosActionPerformed
 
     private void jBtnConsultarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarClientesActionPerformed
         // TODO add your handling code here:
-        new view.Mcp_JDlgConsultaClientes(this, true).setVisible(true);
+        new view.Mcp_JDlgClientes(this, true).setVisible(true);
     }//GEN-LAST:event_jBtnConsultarClientesActionPerformed
 
     private void jBtnConsultarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarProdutosActionPerformed
         // TODO add your handling code here:
-        new view.Mcp_JDlgConsultaProdutos(this, true).setVisible(true);
+        new view.Mcp_JDlgProduto(this, true).setVisible(true);
     }//GEN-LAST:event_jBtnConsultarProdutosActionPerformed
 
     private void jBtnConsultarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarVendasActionPerformed
         // TODO add your handling code here:
         new view.Mcp_JDlgConsultaVendas(this, true).setVisible(true);
     }//GEN-LAST:event_jBtnConsultarVendasActionPerformed
+
+    private void jBtnConsultarClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarClientes1ActionPerformed
+        // TODO add your handling code here:
+        new view.Mcp_JDlgConsultaClientes(this, true).setVisible(true);
+    }//GEN-LAST:event_jBtnConsultarClientes1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,10 +371,10 @@ public class Mcp_JFrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConsultarClientes;
+    private javax.swing.JButton jBtnConsultarClientes1;
     private javax.swing.JButton jBtnConsultarProdutos;
     private javax.swing.JButton jBtnConsultarUsuarios;
     private javax.swing.JButton jBtnConsultarVendas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

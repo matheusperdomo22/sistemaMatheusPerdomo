@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PdfUtil {
 
-    // Fonte padrão
+    
     private static final Font FONT_TITULO = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD);
     private static final Font FONT_CABECALHO = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
     private static final Font FONT_TEXTO = new Font(Font.FontFamily.HELVETICA, 10);
