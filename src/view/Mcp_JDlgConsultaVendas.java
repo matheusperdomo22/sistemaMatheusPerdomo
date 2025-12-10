@@ -5,10 +5,18 @@
 package view;
 
 import bean.McpVendas;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.Mcp_VendasDAO;
 import dao.Mcp_VendasDAO;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import tools.mcp_util;
 import view.Mcp_JDlgVendas;
 
@@ -41,6 +49,64 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
     //    jTable1.setModel(controllerVendas);
     
     }
+    private void gerarPDF() {
+    try {
+       
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Salvar PDF");
+        chooser.setSelectedFile(new File("vendas.pdf"));
+
+        int result = chooser.showSaveDialog(this);
+
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        String caminho = chooser.getSelectedFile().getAbsolutePath();
+
+      
+        if (!caminho.toLowerCase().endsWith(".pdf")) {
+            caminho += ".pdf";
+        }
+
+        
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(caminho));
+        document.open();
+
+        document.add(new Paragraph("RELATÓRIO DE VENDAS"));
+        document.add(new Paragraph("\n"));
+
+        
+        Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
+        List<McpVendas> lista = (List<McpVendas>) vendasDAO.listAll();
+
+        
+        PdfPTable tabela = new PdfPTable(5); 
+        tabela.addCell("Código");
+        tabela.addCell("Cliente");
+        tabela.addCell("Data");
+        tabela.addCell("Forma de Pagamento");
+        tabela.addCell("Total");
+
+        for (McpVendas v : lista) {
+            tabela.addCell(String.valueOf(v.getMcpIdVenda()));
+            tabela.addCell(v.getMcpClientes().getMcpNome()); 
+            tabela.addCell(v.getMcpDataVenda().toString());
+            tabela.addCell(v.getMcpFormaPagamento());
+            tabela.addCell(String.valueOf(v.getMcpTotal()));
+        }
+
+        document.add(tabela);
+        document.close();
+
+        JOptionPane.showMessageDialog(this, "PDF gerado com sucesso em:\n" + caminho);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,6 +125,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
         jTxtTotal = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
+        jBtnPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,6 +147,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jBtnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-ok-24.png"))); // NOI18N
         jBtnOk.setText("OK");
         jBtnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +166,14 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
             }
         });
 
+        jBtnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-pdf-30.png"))); // NOI18N
+        jBtnPDF.setText("GERAR PDF");
+        jBtnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,9 +182,6 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBtnOk))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -119,7 +192,13 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBtnConsultar)))))
+                                .addComponent(jBtnConsultar)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBtnPDF)
+                        .addGap(44, 44, 44)
+                        .addComponent(jBtnOk)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,19 +216,17 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnConsultar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnOk)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnOk)
+                    .addComponent(jBtnPDF))
+                .addGap(56, 56, 56))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-       setVisible(false);
-    }//GEN-LAST:event_jBtnOkActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
@@ -184,6 +261,15 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
         );
     }
     }//GEN-LAST:event_jBtnConsultarActionPerformed
+
+    private void jBtnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPDFActionPerformed
+        // TODO add your handling code here:
+        gerarPDF();
+    }//GEN-LAST:event_jBtnPDFActionPerformed
+
+    private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jBtnOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +347,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnOk;
+    private javax.swing.JButton jBtnPDF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

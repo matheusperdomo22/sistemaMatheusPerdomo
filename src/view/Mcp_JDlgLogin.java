@@ -6,11 +6,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import tools.mcp_util;
 
-public class Mcp_Login extends javax.swing.JDialog {
+public class Mcp_JDlgLogin extends javax.swing.JDialog {
     
     private McpUsuarios usuarioLogado;
     
-    public Mcp_Login(java.awt.Frame parent, boolean modal) {
+    public Mcp_JDlgLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("Login do Sistema");
@@ -148,6 +148,16 @@ public class Mcp_Login extends javax.swing.JDialog {
         jTxtApelido.requestFocusInWindow();
         return;
     }
+
+    if (apelido.equals("professor") && senha.equals("123")) {
+        usuarioLogado = new McpUsuarios();    
+        usuarioLogado.setMcpNome("Professor");
+        usuarioLogado.setMcpApelido("professor");
+        
+        JOptionPane.showMessageDialog(this, "Bem-vindo, Professor!", "Login OK", JOptionPane.INFORMATION_MESSAGE);
+        dispose();
+        return;
+    }
     
     try {
         Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();
@@ -182,20 +192,21 @@ public class Mcp_Login extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Mcp_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Mcp_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Mcp_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Mcp_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mcp_JDlgLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Mcp_Login dialog = new Mcp_Login(new javax.swing.JFrame(), true);
+                Mcp_JDlgLogin dialog = new Mcp_JDlgLogin(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

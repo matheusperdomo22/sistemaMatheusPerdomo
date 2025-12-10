@@ -8,6 +8,7 @@ package dao;
 import bean.McpUsuarios;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 
@@ -91,26 +92,24 @@ public Object listNomeValor(String nome, String cpf) {
         return lista;    
     }
     public McpUsuarios autenticar(String apelido, String senha) {
-    session.beginTransaction();
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    McpUsuarios usuario = null;
+
     try {
-        Criteria criteria = session.createCriteria(McpUsuarios.class);
-        criteria.add(Restrictions.eq("mcpApelido", apelido));
-        criteria.add(Restrictions.eq("mcpSenha", senha));
-        criteria.add(Restrictions.eq("mcpAtivo", "S")); 
-        
-        List<McpUsuarios> lista = criteria.list();
-        session.getTransaction().commit();
-        
-        if (lista != null && !lista.isEmpty()) {
-            return lista.get(0);
-        } else {
-            return null;
-        }
+        usuario = (McpUsuarios) session
+            .createQuery("FROM McpUsuarios u WHERE u.mcpApelido = :apelido AND u.mcpSenha = :senha AND u.mcpAtivo = 'S'")
+            .setParameter("apelido", apelido)
+            .setParameter("senha", senha)
+            .uniqueResult();
     } catch (Exception e) {
-        session.getTransaction().rollback();
-        return null;
+        e.printStackTrace();
+    } finally {
+        session.close();
     }
+
+    return usuario;
 }
+
 
     public static void main(String[] args) {
         Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();

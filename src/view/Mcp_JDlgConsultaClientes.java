@@ -5,10 +5,18 @@
 package view;
 
 import bean.McpClientes;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.Mcp_ClientesDAO;
 import dao.Mcp_ClientesDAO;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import tools.mcp_util;
 import view.Mcp_JDlgClientes;
 
@@ -41,6 +49,63 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
     //    jTable1.setModel(controllerClientes);
     
     }
+    private void gerarPDF() {
+    try {
+        
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Salvar PDF");
+        chooser.setSelectedFile(new File("clientes.pdf")); 
+
+        int result = chooser.showSaveDialog(this);
+
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return; 
+        }
+
+        String caminho = chooser.getSelectedFile().getAbsolutePath();
+
+        if (!caminho.toLowerCase().endsWith(".pdf")) {
+            caminho += ".pdf";
+        }
+
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(caminho));
+        document.open();
+
+        document.add(new Paragraph("RELATÓRIO DE CLIENTES"));
+        document.add(new Paragraph("\n"));
+
+        
+        Mcp_ClientesDAO clientesDAO = new Mcp_ClientesDAO();
+        List<McpClientes> lista = (List<McpClientes>) clientesDAO.listAll();
+
+        
+        PdfPTable tabela = new PdfPTable(4);
+
+        tabela.addCell("Código");
+        tabela.addCell("Nome");
+        tabela.addCell("Telefone");
+        tabela.addCell("CPF");
+
+        for (McpClientes c : lista) {
+            tabela.addCell(String.valueOf(c.getMcpIdClientes()));
+            tabela.addCell(c.getMcpNome());
+            tabela.addCell(c.getMcpTelefone());
+            tabela.addCell(c.getMcpCpf());
+        }
+
+        document.add(tabela);
+        document.close();
+
+        JOptionPane.showMessageDialog(this, 
+                "PDF gerado com sucesso em:\n" + caminho);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+                "Erro ao gerar PDF: " + e.getMessage());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,12 +118,13 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
         jTxtCpf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
+        jBtnOk = new javax.swing.JButton();
+        jBtnPDF1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,13 +146,6 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jBtnOk.setText("OK");
-        jBtnOk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnOkActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Nome");
 
         jLabel2.setText("CPF  ");
@@ -98,6 +157,22 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
             }
         });
 
+        jBtnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-ok-24.png"))); // NOI18N
+        jBtnOk.setText("OK");
+        jBtnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnOkActionPerformed(evt);
+            }
+        });
+
+        jBtnPDF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-pdf-30.png"))); // NOI18N
+        jBtnPDF1.setText("GERAR PDF");
+        jBtnPDF1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnPDF1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,9 +181,6 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBtnOk))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -119,7 +191,13 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBtnConsultar)))))
+                                .addComponent(jBtnConsultar)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBtnPDF1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,19 +215,17 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnConsultar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnOk)
-                .addContainerGap())
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnPDF1))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-       setVisible(false);
-    }//GEN-LAST:event_jBtnOkActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
@@ -181,6 +257,15 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
         );
     }
     }//GEN-LAST:event_jBtnConsultarActionPerformed
+
+    private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jBtnOkActionPerformed
+
+    private void jBtnPDF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPDF1ActionPerformed
+        // TODO add your handling code here:
+        gerarPDF();
+    }//GEN-LAST:event_jBtnPDF1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +343,7 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnOk;
+    private javax.swing.JButton jBtnPDF1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
