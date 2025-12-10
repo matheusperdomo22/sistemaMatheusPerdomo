@@ -82,6 +82,7 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         jLabel5 = new javax.swing.JLabel();
         jTxtTipodesconto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -101,6 +102,8 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
         jBtnCancelar = new javax.swing.JButton();
         jBtnIncluir2 = new javax.swing.JButton();
         jBtnAlterar = new javax.swing.JButton();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -265,10 +268,12 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
 
-            if(mcp_util.pergunta("Deseja realmente excluir este cupom??")) {
-        JOptionPane.showMessageDialog(null, "Cupom excluído com sucesso!");}
-        Mcp_CuponsDAO mcpcuponsDAO = new Mcp_CuponsDAO();
+             if (mcp_util.pergunta("Deseja realmente excluir este cupom?")) {
+
+            Mcp_CuponsDAO mcpcuponsDAO = new Mcp_CuponsDAO();
             mcpcuponsDAO.delete(viewBean());
+
+            JOptionPane.showMessageDialog(null, "Cupom excluído com sucesso!");
 
             mcp_util.limpar(
                     jTxtCodigo, jTxtDescricao, jTxtNomeCupom, jTxtTipodesconto,
@@ -280,6 +285,8 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
                     jBtnConfirmar, jBtnCancelar
             );
             mcp_util.habilitar(true, jBtnIncluir2, jBtnAlterar, jBtnPesquisar);
+
+        }
         
 
     }//GEN-LAST:event_jBtnExcluirActionPerformed
@@ -408,6 +415,7 @@ public class Mcp_JDlgCupons extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JTextField jTxtCodigo;
     private javax.swing.JTextField jTxtDescricao;
     private javax.swing.JTextField jTxtNomeCupom;

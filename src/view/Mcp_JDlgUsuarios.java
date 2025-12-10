@@ -355,14 +355,16 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if (mcp_util.pergunta("deseja excluir?")) {
-            JOptionPane.showMessageDialog(null, "Excluido");
-        }
+        if (mcp_util.pergunta("Deseja excluir?")) {
+
         Mcp_UsuariosDAO mcpusuariosDAO = new Mcp_UsuariosDAO();
         mcpusuariosDAO.delete(viewBean());
 
+        JOptionPane.showMessageDialog(null, "Excluído");
+
         mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
                 jPwdSenha, jCboNivel, jChbAtivo);
+    }
 
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 

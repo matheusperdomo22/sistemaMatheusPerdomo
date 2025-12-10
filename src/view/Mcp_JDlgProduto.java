@@ -286,13 +286,17 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if(mcp_util.pergunta("deseja excluir?")) {
-        JOptionPane.showMessageDialog(null, "Excluido");}
-        Mcp_ProdutosDAO mcpprodutoDAO = new Mcp_ProdutosDAO();
-            mcpprodutoDAO.delete(viewBean());
-        
-        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao);
+        if (mcp_util.pergunta("Deseja excluir?")) {
 
+            Mcp_ProdutosDAO mcpprodutoDAO = new Mcp_ProdutosDAO();
+            mcpprodutoDAO.delete(viewBean());
+
+            JOptionPane.showMessageDialog(null, "Excluído");
+
+            mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco,
+                    jTxtCategoria, jTxtTamanho, jTxtLancamento,
+                    jTxtDescricao);
+        }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
