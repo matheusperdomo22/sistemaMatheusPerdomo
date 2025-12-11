@@ -70,6 +70,27 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
         return jTable1;
     }
 
+   private void atualizarTotalGeral() {
+    double soma = 0.0;
+
+    int colTotal = jTable1.getColumnCount() - 1;
+
+    for (int i = 0; i < jTable1.getRowCount(); i++) {
+        Object valor = jTable1.getValueAt(i, colTotal);
+
+        if (valor != null) {
+            try {
+                soma += Double.parseDouble(valor.toString().replace(",", "."));
+            } catch (Exception e) {}
+        }
+    }
+
+    jTxtTotal.setText(Double.toString(soma));
+}
+
+
+
+
     public McpVendas viewBean() {
         McpVendas vendas = new McpVendas();
         vendas.setMcpIdVenda(mcp_util.strToInt(jTxtCodigo.getText()));
@@ -353,6 +374,10 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
+        if (jTxtCodigo.getText().trim().isEmpty()) {
+        mcp_util.mensagem("Pesquise uma venda antes de alterar");
+        return;
+    }
         mcp_util.habilitar(true, jFmtData, jCboClientes, jCboCupons,
                 jTxtFormadePagamento, jTxtObservacoes, jTxtTotal,
                 jBtnConfirmar, jBtnCancelar, jBtnIncluirProd, jBtnAlterarProd, jBtnExcluirProd);
@@ -361,20 +386,24 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if (mcp_util.pergunta("Deseja excluir esta venda?") == true) {
-            Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
-            Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
 
-            for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
-                McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
-                vendasProdutosDAO.delete(vendasProdutos);
-            }
-
-            vendasDAO.delete(viewBean());
-        }
-        mcp_util.limpar(jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
-        controllerVendProd.setList(new ArrayList());
-        JOptionPane.showMessageDialog(this, "Venda excluída com sucesso!");
+    if (jTxtCodigo.getText().trim().isEmpty()) {
+        mcp_util.mensagem("Pesquise uma venda antes de excluir.");
+        return;
+    }
+    if (!mcp_util.pergunta("Deseja excluir esta venda?")) {
+        return;
+    }
+    Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
+    Mcp_VendasProdutosDAO vendasProdutosDAO = new Mcp_VendasProdutosDAO();
+    for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+        McpVendasProdutos vendasProdutos = controllerVendProd.getBean(ind);
+        vendasProdutosDAO.delete(vendasProdutos);
+    }
+    vendasDAO.delete(viewBean());
+    mcp_util.limpar(jTxtCodigo, jFmtData, jTxtFormadePagamento, jTxtObservacoes, jTxtTotal);
+    controllerVendProd.setList(new ArrayList<>());
+    JOptionPane.showMessageDialog(this, "Venda excluída com sucesso!");
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
@@ -445,29 +474,49 @@ public class Mcp_JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnIncluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirProdActionPerformed
-        // TODO add your handling code here:
         Mcp_JDlgVendasProdutos jDlgVendasProdutos = new Mcp_JDlgVendasProdutos(null, true);
         jDlgVendasProdutos.setTelaAnterior(this, null);
         jDlgVendasProdutos.setVisible(true);
+
+        controllerVendProd.fireTableDataChanged();
+        atualizarTotalGeral();
     }//GEN-LAST:event_jBtnIncluirProdActionPerformed
 
     private void jBtnAlterarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarProdActionPerformed
         // TODO add your handling code here:
+
+        int linha = jTable1.getSelectedRow();
+
+        if (linha == -1) {
+            mcp_util.mensagem("Selecione um produto para alterar.");
+            return;
+        }
+
+        McpVendasProdutos vendasProdutos = controllerVendProd.getBean(linha);
+
         Mcp_JDlgVendasProdutos jDlgVendasProdutos = new Mcp_JDlgVendasProdutos(null, true);
-        McpVendasProdutos vendasProdutos = controllerVendProd.getBean(jTable1.getSelectedRow());
         jDlgVendasProdutos.setTelaAnterior(this, vendasProdutos);
         jDlgVendasProdutos.setVisible(true);
+
+        controllerVendProd.fireTableDataChanged();
+        atualizarTotalGeral();
     }//GEN-LAST:event_jBtnAlterarProdActionPerformed
 
     private void jBtnExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirProdActionPerformed
-        // TODO add your handling code here:
-        if (jTable1.getSelectedRow() == -1) {
+        int linha = jTable1.getSelectedRow();
+
+        if (linha == -1) {
             mcp_util.mensagem("Selecione um produto para excluir.");
-        } else {
-            if (mcp_util.pergunta("Deseja excluir o produto?") == true) {
-                controllerVendProd.removeBean(jTable1.getSelectedRow());
-            }
+            return;
         }
+
+        if (mcp_util.pergunta("Deseja excluir o produto?")) {
+            controllerVendProd.removeBean(linha);
+            controllerVendProd.fireTableDataChanged();
+            atualizarTotalGeral();
+        }
+
+
     }//GEN-LAST:event_jBtnExcluirProdActionPerformed
 
     private void jFmtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFmtDataActionPerformed
