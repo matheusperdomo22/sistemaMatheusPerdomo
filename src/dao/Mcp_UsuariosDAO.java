@@ -63,25 +63,24 @@ public class Mcp_UsuariosDAO extends AbstractDAO{
     session.getTransaction().commit();
     return lista;
 }
-
-public Object listCpf(String cpf) {
+     public Object listNivel(String nivel) {
     session.beginTransaction();
     Criteria criteria = session.createCriteria(McpUsuarios.class);
-    criteria.add(Restrictions.like("mcpCpf", "%" + cpf + "%")); 
+    criteria.add(Restrictions.eq("mcpNivel", nivel)); 
     List lista = criteria.list();
     session.getTransaction().commit();
     return lista;
 }
-
-public Object listNomeValor(String nome, String cpf) {
+public Object listNomeNivel(String nome, String nivel) {
     session.beginTransaction();
     Criteria criteria = session.createCriteria(McpUsuarios.class);
     criteria.add(Restrictions.like("mcpNome", "%" + nome + "%"));
-    criteria.add(Restrictions.like("mcpCpf", "%" + cpf + "%"));
+    criteria.add(Restrictions.eq("mcpNivel", nivel));
     List lista = criteria.list();
     session.getTransaction().commit();
     return lista;
 }
+
 
     @Override
     public Object listAll() {

@@ -239,11 +239,11 @@ public class Mcp_JDlgConsultaClientes extends javax.swing.JDialog {
         Mcp_ClientesDAO usuariosDAO = new Mcp_ClientesDAO();
         List lista;
         if (!jTxtNome.getText().isEmpty() && !jTxtCpf.getText().isEmpty()) {
-            lista = (List) usuariosDAO.listNomeValor(jTxtNome.getText(), jTxtCpf.getText());
+            lista = (List) usuariosDAO.listNomeCpf(jTxtNome.getText(), jTxtCpf.getText());
         } else if (!jTxtNome.getText().isEmpty()) {
             lista = (List) usuariosDAO.listNome(jTxtNome.getText());
         } else if (!jTxtCpf.getText().isEmpty()) {
-            lista = (List) usuariosDAO.listCid(jTxtCpf.getText());
+            lista = (List) usuariosDAO.listCpf(jTxtCpf.getText());
         } else {
             lista = (List) usuariosDAO.listAll();
         }

@@ -48,8 +48,20 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
         controllerConsultasUsuarios.setList(lista);
         jTable1.setModel(controllerConsultasUsuarios);
         
-        
-        
+        Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();
+        List<McpUsuarios> listaUsuarios = (List<McpUsuarios>) usuariosDAO.listAll();
+
+        jCboNivelUsu.removeAllItems();
+        jCboNivelUsu.addItem("Todos");
+
+        for (McpUsuarios c : listaUsuarios) {
+            jCboNivelUsu.removeAllItems();
+            jCboNivelUsu.addItem("Todos");       
+            jCboNivelUsu.addItem("Administrador");
+            jCboNivelUsu.addItem("Funcionário");
+            jCboNivelUsu.addItem("Convidado");
+        }
+  
     //    controllerUsuarios = new ControllerUsuarios();
     //    UsuariosDAO usuariosDAO = new UsuariosDAO();
     //    List lista = (List) usuariosDAO.listAll();
@@ -118,11 +130,11 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
-        jTxtCpf = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
         jBtnPDF1 = new javax.swing.JButton();
         jBtnOk1 = new javax.swing.JButton();
+        jCboNivelUsu = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -145,8 +157,6 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("Nome");
-
-        jLabel2.setText("CPF ");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +181,8 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Nivel dos usuarios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,48 +190,48 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBtnConsultar)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBtnPDF1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnOk1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnOk1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCboNivelUsu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(56, 56, 56)
+                                .addComponent(jBtnConsultar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnConsultar))))
+                            .addComponent(jBtnConsultar)
+                            .addComponent(jCboNivelUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnOk1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnPDF1))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -233,18 +245,25 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
         // TODO add your handling code here:
         Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();
-        List lista;
-        if (!jTxtNome.getText().isEmpty() && !jTxtCpf.getText().isEmpty()) {
-            lista = (List) usuariosDAO.listNomeValor(jTxtNome.getText(), jTxtCpf.getText());
-        } else if (!jTxtNome.getText().isEmpty()) {
+    List lista;
+
+        if ((jTxtNome.getText().length() > 0)
+                && (jCboNivelUsu.getSelectedIndex() != -1 && !jCboNivelUsu.getSelectedItem().toString().equals("Todos"))) {
+            lista = (List) usuariosDAO.listNomeNivel(
+                    jTxtNome.getText(),
+                    jCboNivelUsu.getSelectedItem().toString()
+            );
+        } else if (jTxtNome.getText().length() > 0) {
             lista = (List) usuariosDAO.listNome(jTxtNome.getText());
-        } else if (!jTxtCpf.getText().isEmpty()) {
-            lista = (List) usuariosDAO.listCpf(jTxtCpf.getText());
+        } else if (jCboNivelUsu.getSelectedIndex() != -1 && !jCboNivelUsu.getSelectedItem().toString().equals("Todos")) {
+            lista = (List) usuariosDAO.listNivel(jCboNivelUsu.getSelectedItem().toString());
         } else {
             lista = (List) usuariosDAO.listAll();
         }
-        controllerConsultasUsuarios.setList(lista);
-        if (lista.isEmpty()) {
+
+    controllerConsultasUsuarios.setList(lista);
+
+    if (lista.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(
             this, 
             "Nenhum usuário encontrado com os critérios informados.", 
@@ -324,11 +343,11 @@ public class Mcp_JDlgConsultaUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnOk1;
     private javax.swing.JButton jBtnPDF1;
+    private javax.swing.JComboBox jCboNivelUsu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtCpf;
     private javax.swing.JTextField jTxtNome;
     // End of variables declaration//GEN-END:variables
 }

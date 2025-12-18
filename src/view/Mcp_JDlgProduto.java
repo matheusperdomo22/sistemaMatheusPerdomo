@@ -264,39 +264,44 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
     private void jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirActionPerformed
               // TODO add your handling code here:
          mcp_util.habilitar(true, jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, 
-                jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao, 
-                jBtnConfirmar, jBtnCancelar);
-
+                jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao, jBtnConfirmar, jBtnCancelar);
         mcp_util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, 
-                jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao);
+        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao);
         incluir = true;
-    
+        jTxtCodigo.grabFocus();
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
+        if (jTxtCodigo.getText().trim().isEmpty()) {
+            mcp_util.mensagem("Pesquise um usuario antes de mudar");
+            return;
+        }
         mcp_util.habilitar(true,
-                
                 jTxtNome, jTxtMarca, jTxtPreco,
                 jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao,
                 jBtnConfirmar, jBtnCancelar);
 
-        mcp_util.habilitar(false, jTxtCodigo,jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
-    
+        mcp_util.habilitar(false, jTxtCodigo, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if (mcp_util.pergunta("Deseja excluir?")) {
+       if (jTxtCodigo.getText().trim().isEmpty()) {
+            mcp_util.mensagem("Pesquise um usuario antes de excluir");
+            return;
+        }
 
-            Mcp_ProdutosDAO mcpprodutoDAO = new Mcp_ProdutosDAO();
-            mcpprodutoDAO.delete(viewBean());
-
-            JOptionPane.showMessageDialog(null, "Excluído");
+        if (mcp_util.pergunta("Deseja mesmo excluir ?") == true) {
+            Mcp_ProdutosDAO produtosDAO = new Mcp_ProdutosDAO();
+            McpProdutos mcpprodutos = viewBean();
+            produtosDAO.delete(produtosDAO);
+        }
+        
 
             mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco,
                     jTxtCategoria, jTxtTamanho, jTxtLancamento,
                     jTxtDescricao);
-        }
+        
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
@@ -315,7 +320,9 @@ public class Mcp_JDlgProduto extends javax.swing.JDialog {
         mcp_util.habilitar(true, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
 
         JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!");
-        
+        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtMarca, jTxtPreco, 
+                jTxtCategoria, jTxtTamanho, jTxtLancamento, jTxtDescricao, 
+                jBtnConfirmar, jBtnCancelar);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed

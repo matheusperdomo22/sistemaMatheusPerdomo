@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import bean.McpClientes;
@@ -10,13 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-
-
-/**
- *
- * @author u1845853
- */
-public class Mcp_ClientesDAO extends AbstractDAO{
+public class Mcp_ClientesDAO extends AbstractDAO {
 
     @Override
     public void insert(Object object) {
@@ -47,38 +36,39 @@ public class Mcp_ClientesDAO extends AbstractDAO{
     public Object list(int codigo) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpClientes.class);
-        criteria.add(Restrictions.eq("IdClientes", codigo));
+        criteria.add(Restrictions.eq("mcpIdClientes", codigo)); 
         List lista = criteria.list();
         session.getTransaction().commit();        
         return lista;
     }
-     public Object listNome(String nome) {
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria(McpClientes.class);
-    criteria.add(Restrictions.like("mcpNome", "%" + nome + "%")); 
-    List lista = criteria.list();
-    session.getTransaction().commit();
-    return lista;
-}
 
-public Object listCid(String cid) {
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria(McpClientes.class);
-    criteria.add(Restrictions.like("mcpCidade", "%" + cid + "%")); 
-    List lista = criteria.list();
-    session.getTransaction().commit();
-    return lista;
-}
+    public Object listNome(String nome) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpClientes.class);
+        criteria.add(Restrictions.like("mcpNome", "%" + nome + "%")); 
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
 
-public Object listNomeValor(String nome, String cid) {
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria(McpClientes.class);
-    criteria.add(Restrictions.like("mcpNome", "%" + nome + "%"));
-    criteria.add(Restrictions.like("mcpCidade", "%" + cid + "%"));
-    List lista = criteria.list();
-    session.getTransaction().commit();
-    return lista;
-}
+    public Object listCpf(String cpf) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpClientes.class);
+        criteria.add(Restrictions.like("mcpCpf", "%" + cpf + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listNomeCpf(String nome, String cpf) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(McpClientes.class);
+        criteria.add(Restrictions.like("mcpNome", "%" + nome + "%"));
+        criteria.add(Restrictions.like("mcpCpf", "%" + cpf + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
 
     @Override
     public Object listAll() {
@@ -87,10 +77,5 @@ public Object listNomeValor(String nome, String cid) {
         List lista = criteria.list();
         session.getTransaction().commit();        
         return lista;    
-    }
-
-    public static void main(String[] args) {
-        Mcp_ClientesDAO clientesDAO = new Mcp_ClientesDAO();
-        clientesDAO.listAll();
     }
 }

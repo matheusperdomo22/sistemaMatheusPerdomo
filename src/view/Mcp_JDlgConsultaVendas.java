@@ -4,6 +4,7 @@
  */
 package view;
 
+import bean.McpClientes;
 import bean.McpVendas;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -25,88 +26,87 @@ import view.Mcp_JDlgVendas;
  * @author Marcos
  */
 public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
-   Mcp_ControllerConsultasVendas controllerConsultasVendas;
+
+    Mcp_ControllerConsultasVendas controllerConsultasVendas;
+
     /**
      * Creates new form JDlgVendasPesquisar
      */
- 
     public Mcp_JDlgConsultaVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Pesquisar Vendas");
-   
+
         controllerConsultasVendas = new Mcp_ControllerConsultasVendas();
         Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
         List lista = new ArrayList();
         controllerConsultasVendas.setList(lista);
         jTable1.setModel(controllerConsultasVendas);
-        
-    //    controllerVendas = new ControllerVendas();
-    //    VendasDAO usuariosDAO = new VendasDAO();
-    //    List lista = (List) usuariosDAO.listAll();
-    //    controllerVendas.setList(lista);
-    //    jTable1.setModel(controllerVendas);
-    
+
+        dao.Mcp_ClientesDAO clientesDAO = new dao.Mcp_ClientesDAO();
+        List<McpClientes> listaClientes = (List<McpClientes>) clientesDAO.listAll();
+        jCboClientes.removeAllItems();
+        for (McpClientes c : listaClientes) {
+            jCboClientes.addItem(c);
+        }
+
     }
+
     private void gerarPDF() {
-    try {
-       
-        JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Salvar PDF");
-        chooser.setSelectedFile(new File("vendas.pdf"));
+        try {
 
-        int result = chooser.showSaveDialog(this);
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Salvar PDF");
+            chooser.setSelectedFile(new File("vendas.pdf"));
 
-        if (result != JFileChooser.APPROVE_OPTION) {
-            return;
+            int result = chooser.showSaveDialog(this);
+
+            if (result != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+
+            String caminho = chooser.getSelectedFile().getAbsolutePath();
+
+            if (!caminho.toLowerCase().endsWith(".pdf")) {
+                caminho += ".pdf";
+            }
+
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(caminho));
+            document.open();
+
+            document.add(new Paragraph("RELATÓRIO DE VENDAS"));
+            document.add(new Paragraph("\n"));
+
+            Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
+            List<McpVendas> lista = (List<McpVendas>) vendasDAO.listAll();
+
+            PdfPTable tabela = new PdfPTable(5);
+            tabela.addCell("Código");
+            tabela.addCell("Cliente");
+            tabela.addCell("Data");
+            tabela.addCell("Forma de Pagamento");
+            tabela.addCell("Total");
+
+            for (McpVendas v : lista) {
+                tabela.addCell(String.valueOf(v.getMcpIdVenda()));
+                tabela.addCell(v.getMcpClientes().getMcpNome());
+                tabela.addCell(v.getMcpDataVenda().toString());
+                tabela.addCell(v.getMcpFormaPagamento());
+                tabela.addCell(String.valueOf(v.getMcpTotal()));
+            }
+
+            document.add(tabela);
+            document.close();
+
+            JOptionPane.showMessageDialog(this, "PDF gerado com sucesso em:\n" + caminho);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        String caminho = chooser.getSelectedFile().getAbsolutePath();
-
-      
-        if (!caminho.toLowerCase().endsWith(".pdf")) {
-            caminho += ".pdf";
-        }
-
-        
-        Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(caminho));
-        document.open();
-
-        document.add(new Paragraph("RELATÓRIO DE VENDAS"));
-        document.add(new Paragraph("\n"));
-
-        
-        Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
-        List<McpVendas> lista = (List<McpVendas>) vendasDAO.listAll();
-
-        
-        PdfPTable tabela = new PdfPTable(5); 
-        tabela.addCell("Código");
-        tabela.addCell("Cliente");
-        tabela.addCell("Data");
-        tabela.addCell("Forma de Pagamento");
-        tabela.addCell("Total");
-
-        for (McpVendas v : lista) {
-            tabela.addCell(String.valueOf(v.getMcpIdVenda()));
-            tabela.addCell(v.getMcpClientes().getMcpNome()); 
-            tabela.addCell(v.getMcpDataVenda().toString());
-            tabela.addCell(v.getMcpFormaPagamento());
-            tabela.addCell(String.valueOf(v.getMcpTotal()));
-        }
-
-        document.add(tabela);
-        document.close();
-
-        JOptionPane.showMessageDialog(this, "PDF gerado com sucesso em:\n" + caminho);
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage());
-        e.printStackTrace();
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,11 +121,11 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTxtFormadePagamento = new javax.swing.JTextField();
         jTxtTotal = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
         jBtnPDF = new javax.swing.JButton();
+        jCboClientes = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -155,7 +155,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("Forma de Pagamento");
+        jLabel1.setText("Clientes");
 
         jLabel2.setText("Total");
 
@@ -185,8 +185,8 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jTxtFormadePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jCboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(145, 145, 145)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
@@ -197,7 +197,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBtnPDF)
-                        .addGap(44, 44, 44)
+                        .addGap(18, 18, 18)
                         .addComponent(jBtnOk)))
                 .addContainerGap())
         );
@@ -209,7 +209,7 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtFormadePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,28 +238,33 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
         // TODO add your handling code here:
         Mcp_VendasDAO vendasDAO = new Mcp_VendasDAO();
-    List lista;
+        List<McpVendas> lista;
+        if (jCboClientes.getSelectedIndex() != -1 && !jTxtTotal.getText().isEmpty()) {
+            lista = (List<McpVendas>) vendasDAO.listClienteTotal(
+                    (McpClientes) jCboClientes.getSelectedItem(),
+                    jTxtTotal.getText()
+            );
+        } else if (jCboClientes.getSelectedIndex() != -1) {
+            lista = (List<McpVendas>) vendasDAO.listClientesCbo(
+                    (McpClientes) jCboClientes.getSelectedItem()
+            );
+        } else if (!jTxtTotal.getText().isEmpty()) {
+            lista = (List<McpVendas>) vendasDAO.listTotal(
+                    jTxtTotal.getText()
+            );
+        } else {
+            lista = (List<McpVendas>) vendasDAO.listAll();
+        }
+        controllerConsultasVendas.setList(lista);
 
-    if (!jTxtFormadePagamento.getText().isEmpty() && !jTxtTotal.getText().isEmpty()) {
-        lista = (List) vendasDAO.listFormaTotal(jTxtFormadePagamento.getText(), jTxtTotal.getText());
-    } else if (!jTxtFormadePagamento.getText().isEmpty()) {
-        lista = (List) vendasDAO.listFormaPagamento(jTxtFormadePagamento.getText());
-    } else if (!jTxtTotal.getText().isEmpty()) {
-        lista = (List) vendasDAO.listTotal(jTxtTotal.getText());
-    } else {
-        lista = (List) vendasDAO.listAll();
-    }
-
-    controllerConsultasVendas.setList(lista);
-
-    if (lista.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(
-            this, 
-            "Nenhuma venda encontrada com os critérios informados.", 
-            "Consulta", 
-            javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );
-    }
+        if (lista.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Nenhuma venda encontrada com os critérios informados.",
+                    "Consulta",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jBtnConsultarActionPerformed
 
     private void jBtnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPDFActionPerformed
@@ -348,11 +353,11 @@ public class Mcp_JDlgConsultaVendas extends javax.swing.JDialog {
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnOk;
     private javax.swing.JButton jBtnPDF;
+    private javax.swing.JComboBox jCboClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtFormadePagamento;
     private javax.swing.JTextField jTxtTotal;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import bean.McpClientes;
 import bean.McpVendas;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,10 @@ public class Mcp_VendasDAO extends AbstractDAO {
         return lista;
     }
 
-    public Object listFormaPagamento(String formaPagamento) {
+    public Object listClientesCbo(McpClientes cliente) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
-        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + formaPagamento + "%"));
+        criteria.add(Restrictions.eq("mcpClientes", cliente));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;
@@ -57,28 +58,26 @@ public class Mcp_VendasDAO extends AbstractDAO {
         try {
             total = Double.parseDouble(totalStr);
         } catch (NumberFormatException e) {
-            return new ArrayList(); 
+            return new ArrayList();
         }
-
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
-        criteria.add(Restrictions.eq("mcpTotal", total)); 
+        criteria.add(Restrictions.eq("mcpTotal", total));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;
     }
 
-    public Object listFormaTotal(String formaPagamento, String totalStr) {
+    public Object listClienteTotal(McpClientes cliente, String totalStr) {
         double total;
         try {
             total = Double.parseDouble(totalStr);
         } catch (NumberFormatException e) {
-            return new ArrayList(); 
+            return new ArrayList();
         }
-
         session.beginTransaction();
         Criteria criteria = session.createCriteria(McpVendas.class);
-        criteria.add(Restrictions.like("mcpFormaPagamento", "%" + formaPagamento + "%"));
+        criteria.add(Restrictions.eq("mcpClientes", cliente));
         criteria.add(Restrictions.eq("mcpTotal", total));
         List lista = criteria.list();
         session.getTransaction().commit();

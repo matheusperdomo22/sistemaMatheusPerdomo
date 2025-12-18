@@ -355,21 +355,20 @@ public class Mcp_JDlgUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if (mcp_util.pergunta("Deseja excluir?")) {
-
-        Mcp_UsuariosDAO mcpusuariosDAO = new Mcp_UsuariosDAO();
-        mcpusuariosDAO.delete(viewBean());
-
-        JOptionPane.showMessageDialog(null, "Excluído");
-
-        mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
-                jPwdSenha, jCboNivel, jChbAtivo);
+         if (jTxtCodigo.getText().trim().isEmpty()) {
+        mcp_util.mensagem("Pesquise um usuário antes de excluir");
+        return;
     }
-
+    if (mcp_util.pergunta("Deseja mesmo excluir?")) {
+        Mcp_UsuariosDAO usuariosDAO = new Mcp_UsuariosDAO();
+        McpUsuarios usuario = viewBean(); 
+        usuariosDAO.delete(usuario);
+    }
+    mcp_util.limpar(jTxtCodigo, jTxtNome, jTxtApelido, jFmtCpf, jFmtDataNascimento,
+            jPwdSenha, jCboNivel, jChbAtivo);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-        // TODO add your handling code here:
 
         Mcp_UsuariosDAO mcp_usuariosDAO = new Mcp_UsuariosDAO();
         McpUsuarios mcp_usuarios = viewBean();

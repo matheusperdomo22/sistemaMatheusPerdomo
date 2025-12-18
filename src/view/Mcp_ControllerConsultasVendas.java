@@ -44,7 +44,7 @@ public class Mcp_ControllerConsultasVendas extends AbstractTableModel {
         if ( columnIndex == 0 ){
             return produtos.getMcpIdVenda();
         } else if (columnIndex ==1) {
-            return produtos.getMcpFormaPagamento();        
+            return produtos.getMcpClientes();        
         } else if (columnIndex ==2) {
             return produtos.getMcpTotal();
         } 
@@ -56,7 +56,7 @@ public class Mcp_ControllerConsultasVendas extends AbstractTableModel {
         if ( columnIndex == 0) {
             return "Código";
         } else if ( columnIndex == 1) {
-            return "Forma de pagamento";         
+            return "Clientes";         
         } else if ( columnIndex == 2) {
             return "Total";
         } 
