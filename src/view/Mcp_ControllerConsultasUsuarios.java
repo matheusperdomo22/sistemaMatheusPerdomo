@@ -47,7 +47,7 @@ public class Mcp_ControllerConsultasUsuarios extends AbstractTableModel {
         } else if (columnIndex ==1) {
             return produtos.getMcpNome();        
         } else if (columnIndex ==2) {
-            return produtos.getMcpCpf();
+            return produtos.getMcpNivel();
         } 
         return "";
     }
@@ -59,7 +59,7 @@ public class Mcp_ControllerConsultasUsuarios extends AbstractTableModel {
         } else if ( columnIndex == 1) {
             return "Nome";         
         } else if ( columnIndex == 2) {
-            return "CPF";
+            return "Nivel";
         } 
         return "";
     }

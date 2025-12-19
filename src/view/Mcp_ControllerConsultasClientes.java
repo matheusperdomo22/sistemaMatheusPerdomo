@@ -46,7 +46,7 @@ public class Mcp_ControllerConsultasClientes extends AbstractTableModel {
         } else if (columnIndex ==1) {
             return produtos.getMcpNome();        
         } else if (columnIndex ==2) {
-            return produtos.getMcpCidade();
+            return produtos.getMcpCpf();
         } 
         return "";
     }
@@ -58,7 +58,7 @@ public class Mcp_ControllerConsultasClientes extends AbstractTableModel {
         } else if ( columnIndex == 1) {
             return "Nome";         
         } else if ( columnIndex == 2) {
-            return "Cidade";
+            return "Cpf";
         } 
         return "";
     }
